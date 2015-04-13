@@ -13,7 +13,8 @@ MVP Requirements:
 
 * Create event model
 
-    ATTRIBUTES: name, location, 
+    ATTRIBUTES: name, location, start_datetime, duration, description, image,
+    owner, tickets, 
 
 * Enforce SSL encryption
 * Implement Stripe checkout
