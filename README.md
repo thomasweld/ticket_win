@@ -8,3 +8,12 @@ MVP Requirements:
 6. Owner sets number of available tickets both regular and VIP upon event setup
 6. Ability to sell regular and VIP tickets, set prices, change ticket prices of live event
 7. Checkout using Stripe, distribute funds to Ticket Win Admin (Fees) + Event Owner (Ticket Price)
+
+## To do
+
+* Create event model
+
+    ATTRIBUTES: name, location, 
+
+* Enforce SSL encryption
+* Implement Stripe checkout
