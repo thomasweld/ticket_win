@@ -9,4 +9,19 @@ development:
   host: localhost
   pool: 5
   port: 5432
-  
+test:
+  adapter: postgresql
+  encoding: utf8
+  database: ticket_win_test
+  username: ticket_win
+  host: localhost
+  pool: 5
+  port: 5432
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: ticket_win_development
+  username: ticket_win
+  host: localhost
+  pool: 5
+  port: 5432
