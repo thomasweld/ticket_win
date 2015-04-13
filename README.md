@@ -1,24 +1,9 @@
-# README
+MVP Requirements:
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. Admin users
+2. Users
+3. Guest view ( index events ( homepage ) / show events )
+4. Ability to checkout as user / guest
+5. Ability for users to create events / become event owner
+6. Ability to sell regular and VIP tickets, set prices, change ticket prices of live event
+7. Checkout using Stripe, distribute funds to Ticket Win Admin (Fees) + Event Owner (Ticket Price)
