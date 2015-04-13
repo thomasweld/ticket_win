@@ -191,6 +191,7 @@ DEPENDENCIES
   pg
   rails (= 4.2.0)
   rails_12factor
+  sass
   sass-rails (= 5.0.1)
   spring (= 1.2.0)
   turbolinks (= 2.5.3)
