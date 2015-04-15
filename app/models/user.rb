@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
   has_many :events
+  has_many :tickets
 
   def self.paged(page_number)
     order(admin: :desc, email: :asc).page page_number

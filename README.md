@@ -31,14 +31,14 @@ associations:
 user: has many tickets 
 user/owner: has many events / has many tickets
 
-Event has many tickets / has many users
+Event has many tickets / belongs to one user
 Events (add paperclip to events for promo graphics)
 Attributes: 
 ~~Title~~
 ~~Description~~ 
 ~~Date~~
 Image (paperclip gem) 
-Event Status ( Pending approval Live, Expired ) 
+~~Event Status ( Pending approval Live, Expired )~~
 ~~REG ticket quantity + price~~ (handled by tickets)
 ~~VIP ticket quantity + price~~ (handled by tickets)
 
@@ -48,7 +48,7 @@ attributes:
 Ticket_id 
 SKU(event_id + random #) 
 user_id 
-user_email
+~~user_email~~ (handled by user association)
 event_id 
 
 
