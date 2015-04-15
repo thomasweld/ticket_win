@@ -14,6 +14,7 @@ gem 'bcrypt', '3.1.9'
 gem 'kaminari', '0.16.2'
 gem 'font-awesome-sass', '4.2.2'
 gem 'bootstrap-sass', '3.3.3'
+gem 'classy_enum', '4.0.0'
 
 group :development, :test do
   gem 'byebug', '3.5.1'
