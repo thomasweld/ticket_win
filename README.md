@@ -61,12 +61,19 @@ user_email
 event_id 
 
 
-## To do
-
-* Create event model
-
-    ATTRIBUTES: name, location, start_datetime, duration, description, image,
-    owner, tickets, 
+## Kyle To do 
 
 * Enforce SSL encryption
 * Implement Stripe checkout
+* Setup Mandrill emails for login
+* Add location to events
+* Move annotate gem to dev
+* Iterate tiers automatically
+* Redirect inside page to events index page
+
+## Thomas + Cam To do
+
+* Homeapge (guest)
+* Build out events pages - index, show, new ..etc
+* Paperclip for event images + User avatars
+* Mockups - User profile page (purchase history), user edit profile page, event create page, event page, manage event page  
