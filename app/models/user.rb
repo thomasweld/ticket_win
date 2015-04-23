@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
 
   has_many :events
   has_many :tickets
+  has_one :host
 
   def self.paged(page_number)
     order(admin: :desc, email: :asc).page page_number
