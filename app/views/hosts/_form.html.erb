@@ -1,0 +1,70 @@
+<%= form_for(@host, html: {class: 'form-horizontal'}) do |f| %>
+  <% if @host.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@host.errors.count, "error") %> prohibited your account information from being saved:</h2>
+
+      <ul>
+      <% @host.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :legal_entity_type, 'Legal entity', class: 'control-label col-sm-2' %>
+    <div class="radio col-sm-3">
+      <%= f.radio_button :legal_entity_type, "individual" %>
+      <%= f.label :legal_entity_type, "Individual" %>
+    </div>
+    <div class="radio col-sm-3">
+      <%= f.radio_button :legal_entity_type, "llc" %>
+      <%= f.label :legal_entity_type, "Limited liability corporation (LLC)" %>
+    </div>
+    <div class="radio col-sm-3">
+      <%= f.radio_button :legal_entity_type, "something_else" %>
+      <%= f.label :legal_entity_type, "Something else" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= label_tag 'Email', 'Email', class: 'control-label col-sm-2' %>
+    <div class="col-sm-5">
+      <p class='form-control-static disabled'><%= @email %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :full_name, class: 'control-label col-sm-2' %>
+    <div class="col-sm-3">
+      <%= f.text_field :first_name, class: 'form-control', placeholder: 'First' %>
+    </div>
+    <div class="col-sm-3">
+      <%= f.text_field :last_name, class: 'form-control', placeholder: 'Last' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :address, class: 'control-label col-sm-2' %>
+    <div class="col-sm-6">
+      <%= f.text_field :address, class: 'form-control', placeholder: '123 Main St, Atlanta, GA 30318' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :birth_date, 'Date of birth', class: 'control-label col-sm-2' %>
+    <div class="col-sm-6">
+      <%= f.date_select :birth_date, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :ssn_last_4, 'Last 4 digits of SSN', class: 'control-label col-sm-2' %>
+    <div class="col-sm-1">
+      <%= f.text_field :ssn_last_4, class: 'form-control', placeholder: '0000' %>
+    </div>
+  </div>
+
+  <div class="actions col-sm-offset-1">
+    <%= f.submit 'Submit', class: 'btn btn-primary' %>
+  </div>
+<% end %>

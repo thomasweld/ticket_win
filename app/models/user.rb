@@ -21,6 +21,11 @@
 #  unconfirmed_email      :string
 #  created_at             :datetime
 #  updated_at             :datetime
+#  image_file_name        :string
+#  image_content_type     :string
+#  image_file_size        :integer
+#  image_updated_at       :datetime
+#  host_enabled           :boolean          default(TRUE)
 #
 
 class User < ActiveRecord::Base
