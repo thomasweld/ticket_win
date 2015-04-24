@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>
+  <%= @event.title %>
+</h1>
+
+<div>
+  <%= image_tag @event.image.url(:thumb) %>
+
+</div>
+
+
+<p>
+  <strong>Event date:</strong>
+  <%= @event.start_date %>
+</p>
+
+
+
+<p>
+  <strong>Description:</strong>
+  <%= @event.description %>
+</p>
+
+
+<p>
+  <strong>User:</strong>
+  <%= @event.user_id %>
+</p>
+
+<%= link_to 'Back', events_path %>
+
+   <%# if can? :update, @event %>
+   <% if user_signed_in? %>
+      <% if current_user.id == @event.user_id %>
+ 
+
+      <%= link_to 'Edit', edit_event_path(@event) %> | 
+      <%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+   <% end %>

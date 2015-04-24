@@ -11,20 +11,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150415163628) do
+ActiveRecord::Schema.define(version: 20150424044636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "events", force: :cascade do |t|
-    t.string   "title",       null: false
+    t.string   "title",              null: false
     t.text     "description"
     t.datetime "start_date"
     t.datetime "end_date"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "status"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
+  create_table "hosts", force: :cascade do |t|
+    t.integer  "stripe_account_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "legal_entity_type"
+    t.string   "address"
+    t.datetime "birth_date"
+    t.integer  "ssn_last_4"
+    t.datetime "stripe_tos_acceptance_date"
+    t.string   "stripe_tos_acceptance_ip"
+    t.integer  "user_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "tickets", force: :cascade do |t|
@@ -62,6 +81,10 @@ ActiveRecord::Schema.define(version: 20150415163628) do
     t.string   "unconfirmed_email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

@@ -16,6 +16,7 @@ gem 'font-awesome-sass', '4.2.2'
 gem 'bootstrap-sass', '3.3.3'
 gem 'classy_enum', '4.0.0'
 gem 'annotate'
+gem "paperclip", "~> 4.2"
 
 group :development, :test do
   gem 'byebug', '3.5.1'

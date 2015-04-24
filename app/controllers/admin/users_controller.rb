@@ -59,7 +59,8 @@ class Admin::UsersController < Admin::BaseController
     :password,
     :password_confirmation,
     :admin,
-    :locked
+    :locked,
+    :image
     )
   end
 

@@ -4,10 +4,10 @@
 #
 #  id               :integer          not null, primary key
 #  sku              :string           not null
-#  tier             :integer          not null
+#  tier             :integer          default(1), not null
 #  tier_name        :string
 #  tier_description :text
-#  price            :integer          not null
+#  price            :integer          default(0), not null
 #  status           :string           not null
 #  event_id         :integer
 #  user_id          :integer
