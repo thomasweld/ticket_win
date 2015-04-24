@@ -18,6 +18,8 @@ gem 'classy_enum', '4.0.0'
 gem 'annotate'
 gem "paperclip", "~> 4.2"
 gem 'haml'
+gem 'aws-sdk', '< 2.0'
+
 
 group :development, :test do
   gem 'byebug', '3.5.1'
