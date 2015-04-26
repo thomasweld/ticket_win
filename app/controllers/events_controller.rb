@@ -60,7 +60,6 @@ class EventsController < ApplicationController
 
     def ensure_host_setup
       if current_user.host_enabled? && current_user.host.nil?
-        flash[:notice] = render_to_string partial: 'hosts/host_setup_flash'
         session[:return_to] = new_event_path
         return redirect_to new_host_path
       end

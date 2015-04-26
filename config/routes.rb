@@ -15,7 +15,10 @@ TicketWin::Application.routes.draw do
 
   resources :events
   resources :hosts, except: [:index, :destroy] do
-    collection { get 'bypass' }
+    collection do
+      get 'enable'
+      get 'disable'
+    end
   end
 
 end
