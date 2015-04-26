@@ -16,8 +16,8 @@ TicketWin::Application.routes.draw do
   resources :events
   resources :hosts, except: [:index, :destroy] do
     collection do
-      get 'enable'
-      get 'disable'
+      post 'enable'
+      post 'disable'
     end
   end
 

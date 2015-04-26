@@ -2,7 +2,7 @@
 <hr>
 <div class='text-center'>
 <p>You can create a free event here or setup your payment account and charge customers for this event.</p>
-<%= link_to 'I want to charge for this event', enable_hosts_path, role: 'button', class: 'btn btn-default' %>
+<%= link_to 'I want to charge for this event', enable_hosts_path, data: {method: :post}, role: 'button', class: 'btn btn-default' %>
 </div>
 <hr>
 
