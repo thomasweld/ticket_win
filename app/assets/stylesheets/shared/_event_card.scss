@@ -1,0 +1,84 @@
+.event-card {
+
+  position: relative;
+  width: 18em;
+  height: 28em;
+  // ratio: w = 0.667h
+  margin: 2em;
+  padding: 0;
+  background-color: #FFF;
+
+  * { position: absolute; font-family: source-sans-pro, sans-serif; }
+  // box shadow effect
+  -webkit-box-shadow: 6px 8px 10px 0px rgba(140,140,140,0.75);
+  -moz-box-shadow: 6px 8px 10px 0px rgba(140,140,140,0.75);
+  box-shadow: 6px 8px 10px 0px rgba(140,140,140,0.75);
+
+  .date-tile {
+    width: 16%;
+    height: 10%;
+    margin: 4% 0 0 4%;
+    border: 1.5px solid #FFF;
+    background-color: rgba(255, 255, 255, 0.25);
+    z-index: 100;
+  }
+
+  .feature-image {
+    width: 100%;
+    height: 42%;
+    top: 0;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .feature-copy {
+    width: 100%;
+    height: 48%;
+    top: 42%;
+    * {
+      position: relative;
+      text-align: center;
+    }
+    h3 {
+      font-size: 1.4em;
+      font-weight: 500;
+      color: darken(#2A6496, 10%);
+    }
+    p {
+      font-size: 1.1em;
+      line-height: 1.5em;
+      padding: 0 4%;
+    }
+  }
+
+  .action-bar {
+    width: 100%;
+    height: 10%;
+    bottom: 0;
+
+    .date {
+      display: inline-block;
+      vertical-align: middle;
+      width: 100%;
+      line-height: 2.5em;
+      color: darken($ticketwinGrey, 50%);
+      i {
+        position: relative;
+        color: $ticketwinRed;
+      }
+    }
+
+    .action-btn {
+      width: 16%;
+      height: 100%;
+      right: 0;
+      background-color: $ticketwinRed;
+      i {
+        position: absolute;
+        bottom: 10%;
+        right: 1%;
+        color: #FFF;
+      }
+    }
+  }
+}

@@ -24,6 +24,7 @@ doc/
 .project
 .DS_Store
 .idea
+.sass_cache/
 
 # Ignore application configuration
 /config/application.yml

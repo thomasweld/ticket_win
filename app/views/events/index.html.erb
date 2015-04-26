@@ -3,49 +3,18 @@
 
   <p id="notice"><%= notice %></p>
 
-  <h1>Listing Events</h1>
+  <h1>Popular Events</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>Date</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>User</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
+  <% @events.each do |event| %>
+    <%= render partial: 'shared/event_card', locals: { event: event } %>
+  <% end %>
 
-    <tbody>
-      <% @events.each do |event| %>
-        <tr>
-          <td><%= image_tag event.image.url(:thumb) %></td>
-          <td><%= event.start_date %></td>
-          <td><%= event.title %></td>
-          <td><%= event.description %></td>
-          <td><%= event.user_id %></td>
-          <td><%= link_to 'Show', event %></td>
+    <br />
 
-          <%# if can? :update, @event %>
-          <% if user_signed_in? %>
-            <% if current_user.id == event.user_id %>
-              <td><%= link_to 'Edit', edit_event_path(event) %></td>
-              <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %> </td>
-
-            <% end %>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <br />
-
-  <%= link_to 'New Event', new_event_path %>
+  <hr>
+  <h3 class='text-center'><%= link_to 'Create your own event', new_event_path %></h2>
+  <p class='text-center'>Lorem ipsum</p>
+  <hr>
 
 
 </div>
-<br />
-<br />
-<br />

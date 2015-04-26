@@ -23,9 +23,18 @@ class Event < ActiveRecord::Base
   belongs_to :owner, class_name: 'User'
   has_many :tickets, dependent: :destroy
 
+  before_create :set_defaults
+
   has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
   classy_enum_attr :status, class_name: 'EventStatus', default: 'pending_approval'
   [ :pending_approval?, :live?, :expired? ].each { |status_predicate| delegate status_predicate, to: :status }
+
+  private
+
+  def set_defaults
+    self.start_date ||= Time.now
+    self.end_date ||= self.start_date + 4.hours
+  end
 end
