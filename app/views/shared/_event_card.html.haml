@@ -1,14 +1,14 @@
-.event-card
-  .date-tile
-  .feature-image{ style: "background-image: url(#{event.image.url})" }
-  .feature-copy
-    %h3= event.title.upcase
-    %p= event.description
-  .action-bar
-    .date
-      %span
-        &nbsp;
-        %i.fa.fa-lg.fa-fw.fa-calendar
-        = event.start_date.to_formatted_s(:long_ordinal)
-    .action-btn
+%a{href: "#{event_path(event.id)}"}
+  .event-card
+    .feature-image{ style: "background-image: url(#{event.image.url})" }
+    .feature-copy
+      %h3= event.title.upcase
+      %p= event.description
+    .action-bar
+      .date
+        %span
+          &nbsp;
+          %i.fa.fa-lg.fa-fw.fa-calendar
+          = weekday_with_time(event.start_date)
+      .action-btn
       %i.fa.fa-fw.fa-plus
