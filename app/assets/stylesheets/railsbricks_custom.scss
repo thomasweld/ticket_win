@@ -2,7 +2,7 @@
 // BOOTSTRAP VARIABLES OVERRIDES
 
 // Color system
-$brand-primary: #428bca;
+$brand-primary: #F43D4F;
 $brand-success: #5cb85c;
 $brand-warning: #f0ad4e;
 $brand-danger: #d9534f;
@@ -62,7 +62,7 @@ $btn-link-disabled-color: #cccccc;
 // Buttons: Default
 $btn-default-color: #ffffff;
 $btn-default-bg: #39D1B4;
-$btn-default-border: #e2e2e2;
+$btn-default-border: #39D1B4;
 
 // Buttons: Primary
 $btn-primary-color: $btn-default-color;
@@ -549,11 +549,12 @@ img {
 //***********************************************************
 // FOOTER
 #footer {
-  background-color: #222222;
-  color: #eeeeee;
+  background-color: #F8F8F8;
+  color: black;
   height: 100px;
   margin-top: -100px;
   letter-spacing: 1px;
+  border-top: 2px solid #e2e2e2;
 
   .footer-first-row {
     padding-top: 20px;

@@ -1,9 +1,15 @@
-
-
-
 .nav.navbar-nav.navbar-right {
+  li {
+  padding-top: 10px;
+  &:last-of-type { padding-top: 2px; }
+}
   .btn-default {
   margin-top: 6px;
   margin-bottom: 6px;
+  color: white;
+  }
+  .btn-default:hover {
+    background-color: darken(#39D1B4, 5%)
+
   }
 }
