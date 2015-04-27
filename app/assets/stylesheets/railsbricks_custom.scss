@@ -61,8 +61,8 @@ $btn-link-disabled-color: #cccccc;
 
 // Buttons: Default
 $btn-default-color: #ffffff;
-$btn-default-bg: #bbbbbb;
-$btn-default-border: #cccccc;
+$btn-default-bg: #39D1B4;
+$btn-default-border: #e2e2e2;
 
 // Buttons: Primary
 $btn-primary-color: $btn-default-color;
@@ -130,7 +130,8 @@ $alert-info-border: $state-info-border;
 $navbar-height: 50px;
 $navbar-margin-bottom: 4px;
 $navbar-padding-horizontal: 15px;
-$navbar-padding-vertical: 13px;
+$navbar-padding-vertical: 14px;
+$navbar-margin-vertical: 5px;
 $navbar-border-radius: 0px;
 
 // Navbar: Default navbar

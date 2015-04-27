@@ -5,9 +5,13 @@
 
   <h1>Popular Events</h1>
 
-  <% @events.each do |event| %>
-    <%= render partial: 'shared/event_card', locals: { event: event } %>
-  <% end %>
+ <div class="row">
+      <% @events.each do |event| %>
+          <div class="col-md-4"><%= render partial: 'shared/event_card', locals: { event: event } %></div>
+      <% end %>
+</div>
+
+    
 
     <br />
 
