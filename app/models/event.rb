@@ -20,8 +20,9 @@
 class Event < ActiveRecord::Base
   include ClassyEnum::ActiveRecord
 
-  belongs_to :owner, class_name: 'User'
+  belongs_to :user
   has_many :tickets, dependent: :destroy
+  accepts_nested_attributes_for :tickets
 
   before_create :set_defaults
 
