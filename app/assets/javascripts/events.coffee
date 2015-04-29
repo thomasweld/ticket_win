@@ -16,7 +16,7 @@ $ ->
 
   $('.tier-price').attr('disabled', !option)
   $('#payments-jumbo').children().attr('disabled', !option)
-  opacity = if option then 1 else 0.25
+  opacity = if option then 1 else 0.10
   skipO = if option then 0 else 1
   $('#payments-jumbo').children().fadeTo(1000, opacity)
   $('.small.pricing-free').fadeTo(250, skipO)

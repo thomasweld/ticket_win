@@ -32,10 +32,10 @@
   %h3 Payments &amp; Fees
   %br
   .col-sm-8
-    %p Free events require no setup or fees. Priced events require connecting with Stripe so we can process payments from customers.
     .btn-group
       %button.btn.pricing-free{type:'button', onclick:"formatPricingFeatures(false);"} Free
       %button.btn.pricing-priced{type:'button', onclick:"formatPricingFeatures(true);"} Priced
+    &nbsp; Choose to make your event free to customers or to charge for tickets.
     %p
     .jumbotron#payments-jumbo.text-center
       = image_tag 'stripe_logo.png', style: 'margin: auto; height: 75px;'
