@@ -4,12 +4,11 @@
  *= require_self
  */
 
-
 @import "base/variables";
+@import "railsbricks_custom";
 @import "shared/event_card";
 @import "shared/forms";
 @import "body";
 @import "events";
 @import "hosts";
 @import "navigation";
-@import "railsbricks_custom";

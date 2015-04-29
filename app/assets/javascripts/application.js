@@ -10,10 +10,13 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+// REQUIRE TURBOLINKS SHOULD BE ALWAYS COME AT THE END OF THIS FILE
+//
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap
 //= require analytics
 //= require common
 //= require events
+//= require turbolinks

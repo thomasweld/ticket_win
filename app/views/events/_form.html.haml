@@ -24,19 +24,37 @@
     .col-sm-6
       = f.text_area :description, class: 'form-control'
   .form-group
-    = f.label "Photo: ", class: 'control-label col-sm-2'
+    = f.label :image, class: 'control-label col-sm-2'
     .col-sm-6
       = f.file_field :image, class: 'form-control'
   %br
 
-  %h3 Tickets &amp; Pricing
+  %h3 Payments &amp; Fees
   %br
-  .form-group
-    .col-sm-6
-      .checkbox
-        = check_box_tag 'priced_event', 'yes', false, style: 'margin-left: 0;'
-        = label_tag 'priced_event', "I want to charge for this event", class: 'checkbox inline', style: 'display: inline;'
-    .col-sm-6.text-right
+  .col-sm-8
+    %p Free events require no setup or fees. Priced events require connecting with Stripe so we can process payments from customers.
+    .btn-group
+      %button.btn.pricing-free{type:'button', onclick:"formatPricingFeatures(false);"} Free
+      %button.btn.pricing-priced{type:'button', onclick:"formatPricingFeatures(true);"} Priced
+    %p
+    .jumbotron#payments-jumbo.text-center
+      = image_tag 'stripe_logo.png', style: 'margin: auto; height: 75px;'
+      %i.fa.fa-2x.fa-cc-visa
+      %i.fa.fa-2x.fa-cc-mastercard
+      %i.fa.fa-2x.fa-cc-amex
+      %i.fa.fa-2x.fa-cc-discover
+      %p
+      .small.pricing-free
+        %strong Free events can skip this section!
+      .small
+        You can connect an existing Stripe account or easily create a new one. Click below to connect and activate event pricing.
+      %p
+      %br
+      %button.btn.btn-info.connect-stripe{type:'button'}
+        %strong Connect with Stripe
+
+  .clearfix
+  %h3 Tickets &amp; Pricing
   %table.table.table-striped#ticket-matrix
     %thead
       %tr
@@ -61,8 +79,8 @@
         %td
           %pre.tier 0
         %td= text_field_tag :tier_name, nil, placeholder: "ex. VIP, General Admission", class: 'form-control'
-        %td= text_area_tag :tier_description, nil, placeholder: "Optional description for ticketholders", class: 'form-control'
-        %td= number_field_tag :tier_tickets, 1, in: 1..5000, step: 1, size: 4, class: 'form-control form-control-inline affects-total tier-ticket'
+        %td= text_area_tag :tier_description, nil, placeholder: "(optional)", class: 'form-control', rows: 2, cols: 25
+        %td= number_field_tag :tier_tickets, 0, in: 0..5000, step: 1, size: 4, class: 'form-control form-control-inline affects-total tier-ticket'
         %td
           .input-group
             %span.input-group-addon.input-group-addon-inline $
@@ -70,8 +88,8 @@
             %span.input-group-addon.input-group-addon-inline .00
         %td
           %pre.tier-total $0.00
-        %td.remove-row{style: 'text-align: center;'}
-          %a{onclick: 'addTierRow()', role: 'button', class: 'btn btn-info'}
+        %td.action-col{style: 'text-align: center;'}
+          %a{onclick: 'addTierRow()', role: 'button', class: 'btn btn-info', tabindex: 1}
             %i.fa.fa-plus
 
   %br
