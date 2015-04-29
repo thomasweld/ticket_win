@@ -37,7 +37,6 @@
         = check_box_tag 'priced_event', 'yes', false, style: 'margin-left: 0;'
         = label_tag 'priced_event', "I want to charge for this event", class: 'checkbox inline', style: 'display: inline;'
     .col-sm-6.text-right
-      %a{onclick: 'addTierRow()', role: 'button', class: 'btn btn-info btn-sm'} Add tier
   %table.table.table-striped#ticket-matrix
     %thead
       %tr
@@ -72,6 +71,8 @@
         %td
           %pre.tier-total $0.00
         %td.remove-row{style: 'text-align: center;'}
+          %a{onclick: 'addTierRow()', role: 'button', class: 'btn btn-info'}
+            %i.fa.fa-plus
 
   %br
   .actions

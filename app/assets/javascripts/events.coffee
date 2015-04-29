@@ -40,14 +40,12 @@ runTicketCalcs = ->
   newRow.find('.tier').html(tierIndex)
   newRow.find('.tier-ticket').val(1)
   newRow.find('.tier-price').val(0)
-  newRow.find('.remove-row').html("<a onclick='removeTierRow("+tierIndex+")' class='btn btn-danger'><i class='fa fa-trash-o'></i></a>")
+  newRow.find('.remove-row').html("<a onclick='removeTierRow(this)' class='btn btn-danger'><i class='fa fa-trash-o'></i></a>")
 
   runTicketCalcs()
 
-@removeTierRow = (index) ->
-  i = index
-  $('#ticket-matrix tbody tr').eq(i).remove()
-  $('#ticket-matrix tbody tr').slice(i).each ->
+@removeTierRow = (el) ->
+  $(el).parents('tr').remove()
+  $('#ticket-matrix tbody tr').each (i) ->
     $(this).find('.tier').html(i)
-    i = i + 1
   runTicketCalcs()
