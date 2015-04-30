@@ -16,9 +16,17 @@
     .col-sm-6
       = f.datetime_select :start_date
   .form-group
+    = f.label :end_date, class: 'control-label col-sm-2'
+    .col-sm-6
+      = f.datetime_select :end_date
+  .form-group
     = f.label :title, class: 'control-label col-sm-2'
     .col-sm-6
       = f.text_field :title, class: 'form-control'
+  .form-group
+    = f.label :location, class: 'control-label col-sm-2'
+    .col-sm-6
+      = f.text_field :location, class: 'form-control'
   .form-group
     = f.label :description, class: 'control-label col-sm-2'
     .col-sm-6
