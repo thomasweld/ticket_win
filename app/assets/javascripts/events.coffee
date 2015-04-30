@@ -18,8 +18,8 @@ $ ->
   $('#payments-jumbo').children().attr('disabled', !option)
   opacity = if option then 1 else 0.10
   skipO = if option then 0 else 1
-  $('#payments-jumbo').children().fadeTo(1000, opacity)
-  $('.small.pricing-free').fadeTo(250, skipO)
+  $('#payments-jumbo').children().not('.pricing-free').fadeTo(1000, opacity)
+  $('#payments-jumbo .pricing-free').fadeTo(500, skipO)
 
 runTicketCalcs = ->
   $('.tier-total').each ->
