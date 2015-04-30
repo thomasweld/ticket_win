@@ -1,41 +1,42 @@
 <p id="notice"><%= notice %></p>
 
-<h1>
-  <%= @event.title %>
-</h1>
-
-<div>
-  <%= image_tag @event.image.url(:medium) %>
-
-</div>
-
-
-<p>
-  <strong>Event date:</strong>
-  <%= @event.start_date %>
-</p>
-
-
-
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
-
-
-<p>
-  <strong>User:</strong>
-  <%= @event.user_id %>
-</p>
-
-<%= link_to 'Back', events_path %>
-
-   <%# if can? :update, @event %>
-   <% if user_signed_in? %>
+<div class="row">
+  <div class="col-md-6"><h1><%= @event.title %></h1></div>
+  <div class="col-md-6">
+    <% if user_signed_in? %>
       <% if current_user.id == @event.user_id %>
- 
-
-      <%= link_to 'Edit', edit_event_path(@event) %> | 
-      <%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Edit', edit_event_path(@event), class: "btn btn-default" %>
     <% end %>
    <% end %>
+    <h3>Event date: <%= @event.start_date %></h3></div>
+</div>
+
+<div class="row">
+  <div class="col-md-6"><%= image_tag @event.image.url(:medium) %></div>
+  <div class="col-md-6">
+    <p><strong>Description:</strong> <%= @event.description %></p>
+    <p> 
+
+      <%=form_tag('/add_to_cart') do %>
+   
+        <p>Regular Admission: </p>
+        <%=number_field_tag placeholder: "How Many Regular Tickets?"%>
+        <br />
+        <br />
+        <p>VIP Admission: </p>
+        <%=number_field_tag placeholder: "How Many VIP Tickets?"%>
+        <br />
+        <br />
+        <%=submit_tag "Buy Now!", class: "btn btn-primary"%>
+
+      <%end%>
+    </p>
+  </div>
+</div>
+
+<br />
+
+<div class="row">
+  <div class="col-md-12 text-center"><p><%= link_to 'Back', events_path %></p></div>
+</div>
+
