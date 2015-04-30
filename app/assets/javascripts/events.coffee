@@ -5,11 +5,11 @@ $ ->
 
 @formatPricingFeatures = (option) ->
   if option
-    optionClass = '.pricing-priced'
+    optionClass = '.pricing-paid'
     flipClass = '.pricing-free'
   else
     optionClass = '.pricing-free'
-    flipClass = '.pricing-priced'
+    flipClass = '.pricing-paid'
 
   $('.btn'+optionClass).removeClass('btn-invert').addClass('btn-info')
   $('.btn'+flipClass).removeClass('btn-info').addClass('btn-invert')
@@ -42,8 +42,8 @@ runTicketCalcs = ->
     table.find('tfoot .tickets').html(tickets + " ticket(s)")
 
     totals = 0
-    table.find('td.tier-total').each ->
-      totals = totals + parseInt( $(this).val() )
+    table.find('pre.tier-total').each ->
+      totals = totals + parseInt( $(this).html().slice(1) )
     totals = 0 if isNaN(totals)
     table.find('tfoot .totals').html("$" + totals + ".00")
 
