@@ -14,11 +14,9 @@ TicketWin::Application.routes.draw do
   end
 
   resources :events
-  resources :hosts, except: [:index, :destroy] do
-    collection do
-      post 'enable'
-      post 'disable'
-    end
-  end
 
+  namespace :stripe do
+    get 'connect'
+    get 'confirm'
+  end
 end

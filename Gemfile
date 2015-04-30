@@ -20,6 +20,7 @@ gem 'annotate'
 gem "paperclip", "~> 4.2"
 gem 'haml'
 gem 'aws-sdk', '< 2.0'
+gem 'oauth2', '1.0.0'
 
 
 group :development, :test do
