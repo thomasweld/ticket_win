@@ -40,7 +40,7 @@ TicketWin::Application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
@@ -95,12 +95,14 @@ TicketWin::Application.configure do
 
   # config/environments/production.rb
   config.paperclip_defaults = {
-  :storage => :s3,
-  :s3_credentials => {
-  :bucket => ENV['S3_BUCKET_NAME'],
-  :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-  :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => ENV['S3_BUCKET_NAME'],
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    }
   }
-}
+
+  config.to_prepare { Devise::SessionsController.force_ssl }
 
 end
