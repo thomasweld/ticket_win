@@ -9,6 +9,31 @@
       - @event.errors.full_messages.each do |message|
         %li= message
 
+  %h3 Payments &amp; Fees
+  %br
+  .col-sm-8
+    .btn-group
+      %button.btn.pricing-free{type:'button', onclick:"formatPricingFeatures(false);"} Free
+      %button.btn.pricing-paid{type:'button', onclick:"formatPricingFeatures(true);"} Paid
+    &nbsp; Choose to make your event free to customers or to charge for tickets.
+    %p
+    .jumbotron#payments-jumbo.text-center
+      = image_tag 'stripe_logo.png', style: 'margin: auto; height: 75px;'
+      %i.fa.fa-2x.fa-cc-visa
+      %i.fa.fa-2x.fa-cc-mastercard
+      %i.fa.fa-2x.fa-cc-amex
+      %i.fa.fa-2x.fa-cc-discover
+      %p
+      .small.pricing-free
+        %strong Free events can skip this section!
+      .small
+        You can connect an existing Stripe account or easily create a new one. Click below to connect and activate event pricing.
+      %p
+      %br
+      %a.btn.btn-info.connect-stripe{href: stripe_connect_path}
+        %strong Connect with Stripe
+
+  .clearfix
   %h3 General Information
   %br
   .form-group
@@ -35,31 +60,6 @@
     = f.label :image, class: 'control-label col-sm-2'
     .col-sm-6
       = f.file_field :image, class: 'form-control'
-  %br
-
-  %h3 Payments &amp; Fees
-  %br
-  .col-sm-8
-    .btn-group
-      %button.btn.pricing-free{type:'button', onclick:"formatPricingFeatures(false);"} Free
-      %button.btn.pricing-paid{type:'button', onclick:"formatPricingFeatures(true);"} Paid
-    &nbsp; Choose to make your event free to customers or to charge for tickets.
-    %p
-    .jumbotron#payments-jumbo.text-center
-      = image_tag 'stripe_logo.png', style: 'margin: auto; height: 75px;'
-      %i.fa.fa-2x.fa-cc-visa
-      %i.fa.fa-2x.fa-cc-mastercard
-      %i.fa.fa-2x.fa-cc-amex
-      %i.fa.fa-2x.fa-cc-discover
-      %p
-      .small.pricing-free
-        %strong Free events can skip this section!
-      .small
-        You can connect an existing Stripe account or easily create a new one. Click below to connect and activate event pricing.
-      %p
-      %br
-      %a.btn.btn-info.connect-stripe{href: stripe_connect_path}
-        %strong Connect with Stripe
 
   .clearfix
   %h3 Tickets &amp; Pricing
