@@ -16,6 +16,5 @@ class Tier < ActiveRecord::Base
   belongs_to :event
   has_many :tickets, dependent: :destroy
 
-  auto_increment column: :level, scope: [:event_id], initial: 0
   validates :level, uniqueness: { scope: :event_id }
 end

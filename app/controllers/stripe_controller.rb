@@ -9,7 +9,7 @@ class StripeController < ApplicationController
     if params[:code]
       StripeOauth.new(current_user).verify!(params[:code])
     elsif params[:error]
-      params[:error_description]
+      session[:stripe] = "Stripe authorization unsuccessful. Please try again."
     end
     redirect_to session.delete(:return_to) || root_path
   end

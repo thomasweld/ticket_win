@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/gazay/gon.git
+  revision: 01327b9be8a0360a4b4277ed483c0c0442aa117b
+  specs:
+    gon (5.2.3)
+      actionpack (>= 2.3.0)
+      json
+      multi_json
+      request_store (>= 1.0.5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -40,9 +50,6 @@ GEM
       activerecord (>= 3.2, <= 4.3)
       rake (~> 10.4)
     arel (6.0.0)
-    auto_increment (1.1.0)
-      activerecord (~> 4.0)
-      activesupport (~> 4.0)
     autoprefixer-rails (5.1.8.1)
       execjs
       json
@@ -174,6 +181,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
     rake (10.4.2)
+    request_store (1.1.0)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     sass (3.4.13)
@@ -218,7 +226,6 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
-  auto_increment (= 1.1.0)
   awesome_print
   aws-sdk (< 2.0)
   bcrypt (= 3.1.9)
@@ -229,6 +236,7 @@ DEPENDENCIES
   devise (= 3.4.1)
   figaro (= 1.0.0)
   font-awesome-sass (= 4.2.2)
+  gon!
   haml
   jbuilder (= 2.2.6)
   jquery-rails (= 4.0.3)

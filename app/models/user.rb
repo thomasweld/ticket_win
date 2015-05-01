@@ -37,20 +37,27 @@ class User < ActiveRecord::Base
   has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
   :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  # Pagination
   paginates_per 100
 
-  # Validations
-  # :email
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
   has_many :events
   has_many :tickets
+
+  def stripe_authorized?
+    self.stripe_user_id && self.stripe_authorized_at
+  end
+
+  def deauthorize_stripe!
+    self.update_attributes(
+      stripe_user_id: nil, stripe_account_type: nil,
+      stripe_pub_key: nil, stripe_secret_key: nil,
+      stripe_authorized_at: nil
+    )
+  end
 
   def self.paged(page_number)
     order(admin: :desc, email: :asc).page page_number

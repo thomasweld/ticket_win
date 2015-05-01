@@ -1,7 +1,8 @@
 $ ->
   runTicketCalcs()
   $('.affects-total').bind 'change paste keyup', runTicketCalcs
-  @formatPricingFeatures(false)
+  @formatPricingFeatures(gon.stripeAuthorized || gon.stripeMessage)
+  @pushStripeData(gon.stripeMessage)
 
 @formatPricingFeatures = (option) ->
   if option
@@ -14,12 +15,15 @@ $ ->
   $('.btn'+optionClass).removeClass('btn-invert').addClass('btn-info')
   $('.btn'+flipClass).removeClass('btn-info').addClass('btn-invert')
 
-  $('.tier-price').attr('disabled', !option)
+  $('.tier-price').attr('disabled', !(option && gon.stripeAuthorized))
   $('#payments-jumbo').children().attr('disabled', !option)
   opacity = if option then 1 else 0.10
   skipO = if option then 0 else 1
   $('#payments-jumbo').children().not('.pricing-free').fadeTo(1000, opacity)
   $('#payments-jumbo .pricing-free').fadeTo(500, skipO)
+
+@pushStripeData = (data) ->
+  $('#payments-jumbo #stripe-comm').addClass('alert alert-danger').html(data) if data
 
 runTicketCalcs = ->
   $('.tier-total').each ->

@@ -1,21 +1,29 @@
 
 class EventsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
-  before_filter :set_event, only: [:show, :edit, :update, :destroy]
-  before_filter :ensure_host_setup, only: [:new]
 
   def index
     @events = Event.all
   end
 
   def show
+    @event = Event.find(params[:id])
   end
 
   def new
-    @event = Event.new
+    @event = Event.new(user: current_user)
+    gon.push(
+      stripe_authorized: @event.user.stripe_authorized?,
+      stripe_message: session.delete(:stripe)
+    )
   end
 
   def edit
+    @event = Event.find(params[:id])
+    gon.push(
+      stripe_authorized: @event.user.stripe_authorized?,
+      stripe_message: session.delete(:stripe)
+    )
   end
 
   def create
@@ -34,6 +42,7 @@ class EventsController < ApplicationController
   end
 
   def update
+    @event = Event.find(params[:id])
     respond_to do |format|
       if @event.update(event_params)
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }
@@ -46,6 +55,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
+    @event = Event.find(params[:id])
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
@@ -54,18 +64,8 @@ class EventsController < ApplicationController
   end
 
   private
-    def set_event
-      @event = Event.find(params[:id])
-    end
 
-    def ensure_host_setup
-      if current_user.host_enabled? && current_user.host.nil?
-        session[:return_to] = new_event_path
-        return redirect_to new_host_path
-      end
-    end
-
-    def event_params
-      params.require(:event).permit(:start_date, :end_date, :title, :description, :user_id, :image, :ticket_id, :ticket_price, :ticket_quantity, :vip_ticket_price, :vip_ticket_quantity, :vip_ticket_id, :sku_array)
-    end
+  def event_params
+    params.require(:event).permit(:start_date, :end_date, :title, :description, :user_id, :image, :ticket_id, :ticket_price, :ticket_quantity, :vip_ticket_price, :vip_ticket_quantity, :vip_ticket_id, :sku_array)
+  end
 end

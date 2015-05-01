@@ -32,6 +32,21 @@
       %br
       %a.btn.btn-info.connect-stripe{href: stripe_connect_path}
         %strong Connect with Stripe
+      - if @event.user.stripe_authorized?
+        .text-success
+          %br
+          .well.small
+            Authorization successful for
+            = @event.user.email + "!"
+
+            &nbsp;
+            %span.label.label-success
+              %i.fa.fa-lg.fa-check
+              Authorized
+              = @event.user.stripe_authorized_at.to_formatted_s(:short)
+      %p.clearfix
+      #stripe-comm.small
+
 
   .clearfix
   %h3 General Information
