@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150501021204) do
+ActiveRecord::Schema.define(version: 20150501144528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,21 +30,6 @@ ActiveRecord::Schema.define(version: 20150501021204) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.string   "location"
-  end
-
-  create_table "hosts", force: :cascade do |t|
-    t.integer  "stripe_account_id"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "legal_entity_type"
-    t.string   "address"
-    t.datetime "birth_date"
-    t.integer  "ssn_last_4"
-    t.datetime "stripe_tos_acceptance_date"
-    t.string   "stripe_tos_acceptance_ip"
-    t.integer  "user_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
   end
 
   create_table "tickets", force: :cascade do |t|
@@ -93,7 +78,11 @@ ActiveRecord::Schema.define(version: 20150501021204) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.boolean  "host_enabled",           default: true
+    t.string   "stripe_user_id"
+    t.string   "stripe_account_type"
+    t.string   "stripe_pub_key"
+    t.string   "stripe_secret_key"
+    t.datetime "stripe_authorized_at"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

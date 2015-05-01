@@ -25,7 +25,11 @@
 #  image_content_type     :string
 #  image_file_size        :integer
 #  image_updated_at       :datetime
-#  host_enabled           :boolean          default(TRUE)
+#  stripe_user_id         :string
+#  stripe_account_type    :string
+#  stripe_pub_key         :string
+#  stripe_secret_key      :string
+#  stripe_authorized_at   :datetime
 #
 
 class User < ActiveRecord::Base
@@ -47,7 +51,6 @@ class User < ActiveRecord::Base
 
   has_many :events
   has_many :tickets
-  has_one :host
 
   def self.paged(page_number)
     order(admin: :desc, email: :asc).page page_number

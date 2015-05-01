@@ -10,7 +10,7 @@ class StripeOauth
 
   def verify!(code)
     data = client.get_token(code, params: { scope: 'read_write' })
-    @user.update_attributes(user_stripe_params(data))
+    @user.update_attributes(user_stripe_params(data).merge(stripe_authorized_at: Time.now))
   end
 
   private
