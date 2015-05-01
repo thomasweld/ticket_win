@@ -22,7 +22,8 @@ class Event < ActiveRecord::Base
   include ClassyEnum::ActiveRecord
 
   belongs_to :user
-  has_many :tickets, dependent: :destroy
+  has_many :tiers, dependent: :destroy
+  has_many :tickets, through: :tier
   accepts_nested_attributes_for :tickets
 
   before_create :set_defaults

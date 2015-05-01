@@ -2,29 +2,25 @@
 #
 # Table name: tickets
 #
-#  id               :integer          not null, primary key
-#  sku              :string           not null
-#  tier             :integer          default(1), not null
-#  tier_name        :string
-#  tier_description :text
-#  price            :integer          default(0), not null
-#  status           :string           not null
-#  event_id         :integer
-#  user_id          :integer
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id         :integer          not null, primary key
+#  sku        :string           not null
+#  status     :string           not null
+#  user_id    :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  tier_id    :integer
 #
 
 class Ticket < ActiveRecord::Base
   include ClassyEnum::ActiveRecord
 
-  belongs_to :event
+  belongs_to :tier
   belongs_to :user
 
   after_initialize :provision_sku, unless: :persisted?
 
   validates :sku, presence: true, uniqueness: true
-  validates :event, presence: true
+  validates :tier, presence: true
 
   classy_enum_attr :status, class_name: 'TicketStatus', default: 'unsold'
   [ :unsold?, :sold?, :locked_for_purchase?, :locked_by_event_owner? ].each { |status_predicate| delegate status_predicate, to: :status }

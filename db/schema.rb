@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430202909) do
+ActiveRecord::Schema.define(version: 20150501021204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,20 +48,27 @@ ActiveRecord::Schema.define(version: 20150430202909) do
   end
 
   create_table "tickets", force: :cascade do |t|
-    t.string   "sku",                          null: false
-    t.integer  "tier",             default: 1, null: false
-    t.string   "tier_name"
-    t.text     "tier_description"
-    t.integer  "price",            default: 0, null: false
-    t.string   "status",                       null: false
-    t.integer  "event_id"
+    t.string   "sku",        null: false
+    t.string   "status",     null: false
     t.integer  "user_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "tier_id"
   end
 
-  add_index "tickets", ["event_id"], name: "index_tickets_on_event_id", using: :btree
   add_index "tickets", ["user_id"], name: "index_tickets_on_user_id", using: :btree
+
+  create_table "tiers", force: :cascade do |t|
+    t.integer  "level"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "price"
+    t.integer  "event_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "tiers", ["event_id"], name: "index_tiers_on_event_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
