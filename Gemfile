@@ -21,6 +21,7 @@ gem "paperclip", "~> 4.2"
 gem 'haml'
 gem 'aws-sdk', '< 2.0'
 gem 'oauth2', '1.0.0'
+gem 'auto_increment', '1.1.0'
 
 
 group :development, :test do
@@ -28,6 +29,7 @@ group :development, :test do
   gem 'web-console', '2.0.0'
   gem 'figaro', '1.0.0'
   gem 'spring', '1.2.0'
+  gem 'awesome_print'
 end
 
 gem 'pg'
