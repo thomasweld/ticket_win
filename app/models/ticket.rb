@@ -9,6 +9,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  tier_id    :integer
+#  order_id   :integer
 #
 
 class Ticket < ActiveRecord::Base

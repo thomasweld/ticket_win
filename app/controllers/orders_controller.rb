@@ -6,5 +6,7 @@ class OrdersController < ApplicationController
   end
 
   def show
+    @order = Order.find(params[:id])
+    @tickets = @order.tickets || 3.times { Ticket.new }
   end
 end

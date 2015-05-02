@@ -10,7 +10,7 @@
 #  event_id              :integer
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  unprovisioned_tickets :integer
+#  unprovisioned_tickets :integer          default(0)
 #
 
 class Tier < ActiveRecord::Base
