@@ -1,4 +1,5 @@
 $ ->
+  @reduceTickets()
   runTicketCalcs()
   $('.affects-total').bind 'change paste keyup', runTicketCalcs
   @formatPricingFeatures(gon.stripeAuthorized || gon.stripeMessage)
@@ -16,6 +17,7 @@ $ ->
   $('.btn'+flipClass).removeClass('btn-info').addClass('btn-invert')
 
   $('.tier-price').attr('disabled', !(option && gon.stripeAuthorized))
+  $('.connect-stripe').attr('disabled', !!gon.stripeAuthorized)
   $('#payments-jumbo').children().attr('disabled', !option)
   opacity = if option then 1 else 0.10
   skipO = if option then 0 else 1
@@ -34,9 +36,11 @@ runTicketCalcs = ->
     total = 0 if isNaN(total)
     $(this).html("$" + total + ".00")
 
+    $(this).parents('tr').find('.price-cents').val(ticketPrice*100)
+
     table = $(this).parents('table')
 
-    tierSum = table.find('pre.tier').length
+    tierSum = $('#ticket-matrix tbody tr:visible').length
     table.find('tfoot .tiers').html(tierSum + " tier(s)")
 
     tickets = 0
@@ -52,24 +56,26 @@ runTicketCalcs = ->
     table.find('tfoot .totals').html("$" + totals + ".00")
 
 @addTierRow = ->
-  $('#ticket-matrix tbody tr').last().clone(true).appendTo('#ticket-matrix tbody')
-  newRow = $('#ticket-matrix tbody tr').last()
+  $('#ticket-matrix tbody tr:visible').next().show()
 
-  newRow.find(':input').val('')
-  tierIndex = $('#ticket-matrix tbody tr').length - 1
-  newRow.find('.tier').html(tierIndex)
-  newRow.find('.tier-ticket').val(0)
-  newRow.find('.tier-price').val(0)
-  newRow.find('.action-col').html("<a onclick='removeTierRow(this)' class='btn btn-danger'><i class='fa fa-trash-o'></i></a>")
-
-  if $('#ticket-matrix tbody tr').length >= 5
-    $('#ticket-matrix tbody tr').first().find('.action-col').hide()
+  $('#remove-tier-btn').attr('disabled', false)
+  if $('#ticket-matrix tbody tr:visible').length >= 5
+    $('#add-tier-btn').attr('disabled', true)
 
   runTicketCalcs()
 
-@removeTierRow = (el) ->
-  $(el).parents('tr').remove()
-  $('#ticket-matrix tbody tr').each (i) ->
-    $(this).find('.tier').html(i)
-  $('#ticket-matrix tbody tr').first().find('.action-col').show()
+@removeTierRow = () ->
+  lastRow = $('#ticket-matrix tbody tr:visible').last()
+  lastRow.find(':input').val('')
+  lastRow.find('.tier-ticket').val(0)
+  lastRow.find('.tier-price').val(0)
+  lastRow.hide()
+
+  $('#add-tier-btn').attr('disabled', false)
+  if $('#ticket-matrix tbody tr:visible').length <= 1
+    $('#remove-tier-btn').attr('disabled', true)
+
   runTicketCalcs()
+
+@reduceTickets = () ->
+  $('#ticket-matrix tbody tr').slice(1).hide()

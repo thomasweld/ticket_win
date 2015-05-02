@@ -24,7 +24,7 @@ class Event < ActiveRecord::Base
   belongs_to :user
   has_many :tiers, dependent: :destroy
   has_many :tickets, through: :tier
-  accepts_nested_attributes_for :tickets
+  accepts_nested_attributes_for :tiers, reject_if: lambda { |t| t[:name].blank? }
 
   before_create :set_defaults
 

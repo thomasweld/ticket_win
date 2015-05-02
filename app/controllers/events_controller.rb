@@ -12,33 +12,25 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new(user: current_user)
-    gon.push(
-      stripe_authorized: @event.user.stripe_authorized?,
-      stripe_message: session.delete(:stripe)
-    )
-  end
-
-  def edit
-    @event = Event.find(params[:id])
-    gon.push(
-      stripe_authorized: @event.user.stripe_authorized?,
-      stripe_message: session.delete(:stripe)
-    )
+    5.times { @event.tiers.build }
+    gon.push(stripe_authorized: @event.user.stripe_authorized?, stripe_message: session.delete(:stripe))
   end
 
   def create
     @event = Event.new(event_params)
     @event.user = current_user
 
-    respond_to do |format|
-      if @event.save
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
-        format.json { render :show, status: :created, location: @event }
-      else
-        format.html { render :new }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
-      end
+    if @event.save
+      @event.tiers.each(&:provision_tickets)
+      redirect_to @event, notice: 'Your event was created and all tickets provisioned.'
+    else
+      render :new
     end
+  end
+
+  def edit
+    @event = Event.find(params[:id])
+    gon.push(stripe_authorized: @event.user.stripe_authorized?, stripe_message: session.delete(:stripe))
   end
 
   def update
@@ -66,6 +58,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:start_date, :end_date, :title, :description, :user_id, :image, :ticket_id, :ticket_price, :ticket_quantity, :vip_ticket_price, :vip_ticket_quantity, :vip_ticket_id, :sku_array)
+    params.require(:event).permit(:start_date, :end_date, :title, :description, :image,
+      :location, tiers_attributes: [:level, :name, :description, :price, :unprovisioned_tickets])
   end
 end

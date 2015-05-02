@@ -16,3 +16,10 @@ table tfoot td {
     color: #FFF;
   }
 }
+
+.tack { position: relative; }
+.action-bar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}

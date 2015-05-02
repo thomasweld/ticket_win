@@ -25,13 +25,14 @@ class Ticket < ActiveRecord::Base
   classy_enum_attr :status, class_name: 'TicketStatus', default: 'unsold'
   [ :unsold?, :sold?, :locked_for_purchase?, :locked_by_event_owner? ].each { |status_predicate| delegate status_predicate, to: :status }
 
+  [ :price, :level, :name, :description, :event_id ].each { |attr| delegate attr, to: :tier } 
   private
 
   def provision_sku
     return true if self.sku
     loop do
       self.sku = SKU.new(self).sku
-      break unless Ticket.find_by(sku: self.sku)
+      break unless self.class.find_by(sku: self.sku)
     end
   end
 end
