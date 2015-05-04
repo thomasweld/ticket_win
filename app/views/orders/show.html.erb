@@ -1,2 +1,8 @@
-<h1>Orders#show</h1>
-<p>Find me in app/views/orders/show.html.erb</p>
+<h1>Here's your tickets!</h1>
+<div class="row">
+
+  <% @tickets.each do |ticket| %>
+    <%= render partial: 'tickets/ticket', locals: { ticket: ticket, event: @event } %>
+  <% end %>
+
+</div>

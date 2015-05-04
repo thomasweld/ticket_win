@@ -18,13 +18,14 @@ class Tier < ActiveRecord::Base
   has_many :tickets, dependent: :destroy
 
   validates :level, uniqueness: { scope: :event_id }
-
-  def available_for_purchase
-    tickets.where(status: 'unsold').count
-  end
+  [:title, :start_date, :end_date, :location].each { |attr| delegate attr, to: :event }
 
   def available_tickets
     tickets.where(status: 'unsold')
+  end
+
+  def available_for_purchase
+    available_tickets.count
   end
 
   def price_in_dollars

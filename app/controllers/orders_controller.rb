@@ -11,7 +11,8 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    @tickets = @order.tickets || 3.times { Ticket.new }
+    @event = @order.event
+    @tickets = @order.tickets
   end
 
   private

@@ -33,6 +33,10 @@ class Ticket < ActiveRecord::Base
     self.update_attributes(status: 'locked_for_order')
   end
 
+  def user_email
+    user.try(:email) || "user@example.com"
+  end
+
   private
 
   def provision_sku

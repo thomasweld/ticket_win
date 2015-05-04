@@ -10,6 +10,7 @@
 
 class Order < ActiveRecord::Base
   belongs_to :user
+  belongs_to :event
   has_many :tickets
 
   def self.create_with_tickets(order_params)
