@@ -8,6 +8,8 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @tiers = @event.tiers.sort_by(&:level)
+    @order = Order.new
   end
 
   def new

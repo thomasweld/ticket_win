@@ -7,7 +7,7 @@ end
 class TicketStatus::Sold < TicketStatus
 end
 
-class TicketStatus::LockedForPurchase < TicketStatus
+class TicketStatus::LockedForOrder < TicketStatus
 end
 
 class TicketStatus::LockedByEventOwner < TicketStatus

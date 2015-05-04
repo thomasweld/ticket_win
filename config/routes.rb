@@ -13,7 +13,7 @@ TicketWin::Application.routes.draw do
   end
 
   resources :events
-  resources :orders
+  resources :orders, except: :new
 
   namespace :stripe do
     get 'connect'

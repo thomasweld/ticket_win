@@ -2,6 +2,7 @@ $ ->
   @reduceTickets()
   runTicketCalcs()
   $('.affects-total').bind 'change paste keyup', runTicketCalcs
+  $('.tickets-to-purchase').bind 'change paste keyup', runPreorderCalcs
   @formatPricingFeatures(gon.stripeAuthorized || gon.stripeMessage)
   @pushStripeData(gon.stripeMessage)
 
@@ -79,3 +80,15 @@ runTicketCalcs = ->
 
 @reduceTickets = () ->
   $('#ticket-matrix tbody tr').slice(1).hide()
+
+@runPreorderCalcs = () ->
+  footer = $('#tickets-preorder tfoot')
+  total = { num: 0, price: 0 }
+  $('#tickets-preorder .tickets-to-purchase').each ->
+    price = parseInt( $(this).parents('tr').find('.price').html().slice(1) )
+    num = parseInt( $(this).val() )
+    total.num = total.num + (num || 0)
+    total.price = total.price + price*(num || 0)
+  console.log(total)
+  footer.find('.preorder-ticket-sum').html(total.num + " tickets @")
+  footer.find('.preorder-price-sum').html("$" + total.price + ".00")

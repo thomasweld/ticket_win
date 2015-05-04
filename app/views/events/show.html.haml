@@ -1,0 +1,38 @@
+.row
+  .col-md-6
+    %h1= @event.title
+  .col-md-6
+    %h3= @event.start_date
+.row
+  .col-md-6= image_tag @event.image.url(:medium)
+  .col-md-6
+    %p= @event.description
+    %p &nbsp;
+
+    = form_for @order do |f|
+      %table.table.table-striped#tickets-preorder
+        %tbody
+          - @tiers.each do |tier|
+            = hidden_field_tag 'event_id', @event.id
+            %tr
+              %td.media
+                .media-body
+                  %h5= "#{tier.name} (#{tier.available_for_purchase} available)"
+                  .small= tier.description
+              %td.small.text-right.price= tier.price_in_dollars
+              %td
+                = number_field_tag "tickets_tier_id_#{tier.id}", 0, in: 0..tier.available_for_purchase, size: 4, class: 'form-control tickets-to-purchase'
+        %tfoot
+          %td.preorder-ticket-sum.text-right
+          %td.preorder-price-sum
+          %td
+            = f.submit 'Buy Now', data: { disable_with: 'Processing...' }, class: 'btn btn-primary'
+%br
+.row
+  .col-md-12.text-center
+    %p
+      = link_to 'Back', events_path
+      &nbsp;
+      - if user_signed_in?
+        - if current_user.id == @event.user_id
+          = link_to 'Manage this event', edit_event_path(@event), class: "btn btn-info"

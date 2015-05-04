@@ -23,3 +23,7 @@ table tfoot td {
   bottom: 0;
   right: 0;
 }
+
+#tickets-preorder {
+  td:not(:first-of-type) { line-height: 4; vertical-align: middle; }
+}

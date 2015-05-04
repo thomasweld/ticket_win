@@ -19,6 +19,18 @@ class Tier < ActiveRecord::Base
 
   validates :level, uniqueness: { scope: :event_id }
 
+  def available_for_purchase
+    tickets.where(status: 'unsold').count
+  end
+
+  def available_tickets
+    tickets.where(status: 'unsold')
+  end
+
+  def price_in_dollars
+    "$#{self.price / 100}.00"
+  end
+
   def provision_tickets
     self.transaction do
       self.unprovisioned_tickets.times do
