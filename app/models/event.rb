@@ -28,6 +28,8 @@ class Event < ActiveRecord::Base
 
   before_create :set_defaults
 
+  scope :approved, -> { Event.where(status: 'live') }
+
   has_attached_file :image, :styles => { :medium => "600x900>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
