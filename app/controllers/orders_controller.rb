@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
 
   def checkout
     @order = Order.find(params[:id])
+    @email = current_user.try(:email)
     @line_items = line_items
     @total = ?$ + (@order.total / 100).to_s + '.00'
 
@@ -34,6 +35,8 @@ class OrdersController < ApplicationController
       path = :back
     elsif charge[:paid] && charge[:status] == 'succeeded'
       @order.tickets.each { |t| t.sell! to: current_user }
+      @order.update_attribute(:delivery_email, params[:email])
+      OrderMailer.order_confirmation_email(@order).deliver_later
       path = redeem_order_path(@order.redemption_code)
     else
       flash[:error] = "Something went wrong with your payment. Please try again."

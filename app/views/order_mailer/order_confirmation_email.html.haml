@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+%html
+  %body
+    %h1
+      = @order.event.title
+      on
+      = @order.event.start_date.to_formatted_s(:short)
+    %h2= @order.event.location
+
+    %p
+      You have
+      = @order.tickets.count
+      ticket(s) awaiting redemption.
+      You'll need to present these tickets at the event to enter.
+
+    %p= redeem_order_url @order
+

@@ -36,11 +36,15 @@
       = form_for @order, html: { class: 'require-validation payment-form' } do |f|
         .form-row
           .col-xs-12.form-group.required
-            %label.control-label Name on Card
+            %label.control-label Email for order delivery
+            = text_field_tag :email, @email, placeholder: 'user@example.com', size: 4, class: 'form-control'
+        .form-row
+          .col-xs-12.form-group.required
+            %label.control-label Name on card
             %input.form-control{:size => "4", :type => "text"}
         .form-row
           .col-xs-12.form-group.card.required
-            %label.control-label Card Number
+            %label.control-label Card number
             %input.form-control.card-number{:autocomplete => "off", :size => "20", :type => "text"}
         .form-row
           .col-xs-4.form-group.cvc.required
