@@ -1,7 +1,6 @@
 
 class EventsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
-  before_action :block_edit, only: :edit
 
   def index
     @events = Event.all
@@ -16,7 +15,7 @@ class EventsController < ApplicationController
   def new
     @event = Event.new(user: current_user)
     5.times { @event.tiers.build }
-    gon.push(stripe_authorized: @event.user.stripe_authorized?, stripe_message: session.delete(:stripe))
+    gon.push(stripe_authorized: @event.user.stripe_authorized?, stripe_message: session.delete(:stripe), editAction: false)
   end
 
   def create
@@ -33,7 +32,7 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
-    gon.push(stripe_authorized: @event.user.stripe_authorized?, stripe_message: session.delete(:stripe))
+    gon.push(stripe_authorized: @event.user.stripe_authorized?, stripe_message: session.delete(:stripe), editAction: true)
   end
 
   def update
@@ -63,9 +62,5 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:start_date, :end_date, :title, :description, :image,
       :location, tiers_attributes: [:level, :name, :description, :price, :unprovisioned_tickets])
-  end
-
-  def block_edit
-    redirect_to :back
   end
 end

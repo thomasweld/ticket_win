@@ -32,6 +32,7 @@ class OrdersController < ApplicationController
     elsif charge.is_a? Stripe::InvalidRequestError
       flash[:error] = "This event is temporarily unavailable."
       Rails.logger.fatal "Stripe::InvalidRequestError for order #{@order.id}"
+      Rails.logger.fatal "Error: #{charge}"
       path = :back
     elsif charge[:paid] && charge[:status] == 'succeeded'
       @order.tickets.each { |t| t.sell! to: current_user }

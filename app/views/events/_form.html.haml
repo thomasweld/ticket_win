@@ -77,49 +77,50 @@
       = f.file_field :image, class: 'form-control'
 
   %br
-  .tack.clearfix
-    %h3 Tickets &amp; Pricing
-    .action-bar.pull-right
-      %a#remove-tier-btn{onclick: 'removeTierRow()', role: 'button', class: 'btn btn-danger', disabled: true}
-        %i.fa.fa-trash
-      %a#add-tier-btn{onclick: 'addTierRow()', role: 'button', class: 'btn btn-info'}
-        %i.fa.fa-plus
+  #ticketing-section
+    .tack.clearfix
+      %h3 Tickets &amp; Pricing
+      .action-bar.pull-right
+        %a#remove-tier-btn{onclick: 'removeTierRow()', role: 'button', class: 'btn btn-danger', disabled: true}
+          %i.fa.fa-trash
+        %a#add-tier-btn{onclick: 'addTierRow()', role: 'button', class: 'btn btn-info'}
+          %i.fa.fa-plus
 
-  %table.table.table-striped#ticket-matrix
-    %thead
-      %tr
-        %th Tier
-        %th Tier name
-        %th Description
-        %th # of tickets
-        %th $ / ticket
-        %th Total $ / tier
-    %tfoot
-      %tr
-        %td.tiers{colspan: 2}
-        %td
-        %td.tickets
-        %td
-        %td
-          %pre.totals
-    %tbody
-      = f.fields_for :tiers do |ff|
+    %table.table.table-striped#ticket-matrix
+      %thead
         %tr
+          %th Tier
+          %th Tier name
+          %th Description
+          %th # of tickets
+          %th $ / ticket
+          %th Total $ / tier
+      %tfoot
+        %tr
+          %td.tiers{colspan: 2}
           %td
-            %pre.tier= ff.index
-            = ff.hidden_field :level, value: ff.index
-          %td= ff.text_field :name, placeholder: "ex. VIP, General Admission", class: 'form-control'
-          %td= ff.text_area :description, placeholder: "(optional)", class: 'form-control', rows: 2, cols: 25
-          %td= ff.number_field :unprovisioned_tickets, value: 0, in: 0..5000, step: 1, size: 4, class: 'form-control form-control-inline affects-total tier-ticket'
+          %td.tickets
           %td
-            .input-group
-              %span.input-group-addon.input-group-addon-inline $
-              = number_field_tag :price_dollars, 0, in: 0..9999, size: 4, class: 'form-control form-control-inline affects-total tier-price'
-              = ff.hidden_field :price, value: 0, class: 'price-cents'
-              %span.input-group-addon.input-group-addon-inline .00
           %td
-            %pre.tier-total $0.00
+            %pre.totals
+      %tbody
+        = f.fields_for :tiers do |ff|
+          %tr
+            %td
+              %pre.tier= ff.index
+              = ff.hidden_field :level, value: ff.index
+            %td= ff.text_field :name, placeholder: "ex. VIP, General Admission", class: 'form-control'
+            %td= ff.text_area :description, placeholder: "(optional)", class: 'form-control', rows: 2, cols: 25
+            %td= ff.number_field :unprovisioned_tickets, value: 0, in: 0..5000, step: 1, size: 4, class: 'form-control form-control-inline affects-total tier-ticket'
+            %td
+              .input-group
+                %span.input-group-addon.input-group-addon-inline $
+                = number_field_tag :price_dollars, 0, in: 0..9999, size: 4, class: 'form-control form-control-inline affects-total tier-price'
+                = ff.hidden_field :price, value: 0, class: 'price-cents'
+                %span.input-group-addon.input-group-addon-inline .00
+            %td
+              %pre.tier-total $0.00
 
   %br
   .actions.row
-    = f.submit class: 'btn btn-primary', data: { disable_with: 'Provisioning tickets for event... this may take a minute...' }
+    = f.submit class: 'btn btn-primary', data: { disable_with: 'Processing event... this may take a minute...' }

@@ -5,6 +5,7 @@ $ ->
   $('.tickets-to-purchase').bind 'change paste keyup', runPreorderCalcs
   @formatPricingFeatures(gon.stripeAuthorized || gon.stripeMessage)
   @pushStripeData(gon.stripeMessage)
+  @disableTicketing() if gon.editAction
 
 @formatPricingFeatures = (option) ->
   if option
@@ -92,3 +93,6 @@ runTicketCalcs = ->
   console.log(total)
   footer.find('.preorder-ticket-sum').html(total.num + " tickets @")
   footer.find('.preorder-price-sum').html("$" + total.price + ".00")
+
+@disableTicketing = () ->
+  $('#ticketing-section').remove()
