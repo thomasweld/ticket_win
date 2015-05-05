@@ -13,5 +13,4 @@
       ticket(s) awaiting redemption.
       You'll need to present these tickets at the event to enter.
 
-    %p= redeem_order_url @order
-
+    %p= "#{root_url}/redeem/#{@order.redemption_code}"

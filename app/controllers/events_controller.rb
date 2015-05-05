@@ -15,7 +15,7 @@ class EventsController < ApplicationController
   def new
     @event = Event.new(user: current_user)
     5.times { @event.tiers.build }
-    gon.push(stripe_authorized: @event.user.stripe_authorized?, stripe_message: session.delete(:stripe), editAction: false)
+    gon.push(stripe_authorized: @event.user.stripe_authorized?, stripe_message: session.delete(:stripe))
   end
 
   def create
