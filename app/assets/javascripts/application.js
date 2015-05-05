@@ -19,4 +19,5 @@
 //= require analytics
 //= require common
 //= require events
+//= require orders
 //= require turbolinks

@@ -3,14 +3,52 @@ class OrdersController < ApplicationController
   before_action :parse_preorder!, only: :create
 
   def create
-    @order = Order.create_with_tickets(user: current_user, tickets: requested_tickets)
+    @order = Order.create_from_preorder(user: current_user, tickets: requested_tickets)
+    path = @order.valid? ? checkout_order_path(@order) : :back
+    redirect_to path
+  end
+
+  def checkout
+    @order = Order.find(params[:id])
+    @line_items = line_items
+    @total = ?$ + (@order.total / 100).to_s + '.00'
+
+    gon.push(stripe_pub_key: ENV['STRIPE_PUB_KEY'])
   end
 
   def update
+    @order = Order.find(params[:id])
+    charge_hash = {
+      amount: @order.total,
+      source_token: params[:stripe_token],
+      destination_user: @order.event.user
+    }
+    charge = StripeCharge.new(@order, charge_hash).execute!
+    path = nil
+    if charge.is_a? Stripe::CardError
+      flash[:error] = "Your payment was unsuccessful. Please try again."
+      path = :back
+    elsif charge.is_a? Stripe::InvalidRequestError
+      flash[:error] = "This event is temporarily unavailable."
+      Rails.logger.fatal "Stripe::InvalidRequestError for order #{@order.id}"
+      path = :back
+    elsif charge[:paid] && charge[:status] == 'succeeded'
+      @order.tickets.each { |t| t.sell! to: current_user }
+      path = redeem_order_path(@order.redemption_code)
+    else
+      flash[:error] = "Something went wrong with your payment. Please try again."
+      path = :back
+    end
+    redirect_to path
   end
 
   def show
     @order = Order.find(params[:id])
+    redirect_to redeem_order_path(@order.redemption_code)
+  end
+
+  def redeem
+    @order = Order.find_by(redemption_code: params[:redemption_code])
     @event = @order.event
     @tickets = @order.tickets
   end
@@ -35,5 +73,24 @@ class OrdersController < ApplicationController
       requested_tickets << tier.first.available_tickets.first(tier.last)
     end
     requested_tickets.flatten
+  end
+
+  def line_items
+    items = []
+    event = @order.tickets.first.tier.event
+    event_title = event.title
+    location = event.location
+    event_date = event.start_date.to_formatted_s(:long)
+    tiers = @order.tickets.map(&:tier).uniq.sort_by(&:level)
+    tiers.each do |tier|
+      qty = @order.tickets.select { |t| t.tier_id == tier.id }.count
+      items << {
+        description: "#{event_title} @ #{location} - #{tier.name}\n#{event_date}",
+        price: tier.price_in_dollars,
+        quantity: qty,
+        total: ?$ + (tier.price_in_dollars.gsub(/\$/,'').to_i * qty).to_s + '.00'
+      }
+    end
+    items
   end
 end

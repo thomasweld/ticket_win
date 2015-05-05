@@ -1,6 +1,7 @@
 
 class EventsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
+  before_action :block_edit, only: :edit
 
   def index
     @events = Event.all
@@ -62,5 +63,9 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:start_date, :end_date, :title, :description, :image,
       :location, tiers_attributes: [:level, :name, :description, :price, :unprovisioned_tickets])
+  end
+
+  def block_edit
+    redirect_to :back
   end
 end

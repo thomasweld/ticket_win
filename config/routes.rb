@@ -15,7 +15,10 @@ TicketWin::Application.routes.draw do
   end
 
   resources :events
-  resources :orders, except: :new
+  resources :orders, except: [:new, :show] do
+    member { get 'checkout' }
+  end
+  get '/redeem/:redemption_code', to: 'orders#redeem', as: 'redeem_order'
 
   namespace :stripe do
     get 'connect'

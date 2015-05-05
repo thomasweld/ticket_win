@@ -22,6 +22,7 @@ gem 'haml'
 gem 'aws-sdk', '< 2.0'
 gem 'oauth2', '1.0.0'
 gem 'gon', github: 'gazay/gon'
+gem 'stripe', '1.21.0'
 
 
 group :development, :test do

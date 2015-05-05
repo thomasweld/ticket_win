@@ -1,0 +1,67 @@
+%h1.text-center Checkout
+
+.container
+  .row
+    .col-sm-8
+      .panel.panel-default
+        .panel-heading
+          %h3.text-center
+            %strong Order summary
+        .panel-body
+          .table-responsive
+            %table.table.table-condensed
+              %thead
+                %tr
+                  %th Description
+                  %th.text-right Price
+                  %th.text-right Quantity
+                  %th.text-right Total
+              %tbody
+                - @line_items.each do |li|
+                  %tr
+                    %td.small= li[:description].gsub(/\n/,'<br/>').html_safe
+                    %td.text-right= li[:price]
+                    %td.text-right= li[:quantity]
+                    %td.text-right
+                      %i= li[:total]
+                %tr
+                  %td
+                  %td
+                  %td.text-right
+                    %strong Total
+                  %td.text-right
+                    %strong= @total
+
+    .col-md-4
+      = form_for @order, html: { class: 'require-validation payment-form' } do |f|
+        .form-row
+          .col-xs-12.form-group.required
+            %label.control-label Name on Card
+            %input.form-control{:size => "4", :type => "text"}
+        .form-row
+          .col-xs-12.form-group.card.required
+            %label.control-label Card Number
+            %input.form-control.card-number{:autocomplete => "off", :size => "20", :type => "text"}
+        .form-row
+          .col-xs-4.form-group.cvc.required
+            %label.control-label CVC
+            %input.form-control.card-cvc{:autocomplete => "off", :placeholder => "ex. 311", :size => "4", :type => "text"}
+          .col-xs-4.form-group.expiration.required
+            %label.control-label Expiration
+            %input.form-control.card-expiry-month{:placeholder => "MM", :size => "2", :type => "text"}
+          .col-xs-4.form-group.expiration.required
+            %label.control-label  
+            %input.form-control.card-expiry-year{:placeholder => "YYYY", :size => "4", :type => "text"}
+        .form-row
+          .col-xs-12
+            .form-control.total.btn.btn-info{disabled: true}
+              Total:
+              %span.amount= @total
+        .form-row
+          .col-xs-12.form-group
+            = f.submit "Pay »", class: 'form-control btn btn-primary', style: 'margin-top: 10px;'
+        .form-row
+          .col-xs-12.error.form-group.hide
+            .alert-danger.alert
+              Please correct the errors and try again.
+    .col-md-4

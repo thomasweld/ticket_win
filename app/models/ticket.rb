@@ -33,8 +33,16 @@ class Ticket < ActiveRecord::Base
     self.update_attributes(status: 'locked_for_order')
   end
 
+  def sell!(to: nil)
+    self.update_attributes(status: 'sold', user: user)
+  end
+
   def user_email
-    user.try(:email) || "user@example.com"
+    user.try(:email)
+  end
+
+  def formatted_sku
+    self.sku.reverse.scan(/.{1,3}/).join(' ').reverse
   end
 
   private
