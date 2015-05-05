@@ -23,6 +23,7 @@ gem 'aws-sdk', '< 2.0'
 gem 'oauth2', '1.0.0'
 gem 'gon', github: 'gazay/gon'
 gem 'stripe', '1.21.0'
+gem 'font-awesome-rails'
 
 
 group :development, :test do
