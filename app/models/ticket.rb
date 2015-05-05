@@ -45,6 +45,10 @@ class Ticket < ActiveRecord::Base
     self.sku.reverse.scan(/.{1,3}/).join(' ').reverse
   end
 
+  def formatted_price
+    "$#{(self.price / 100)}.00"
+  end
+
   private
 
   def provision_sku
