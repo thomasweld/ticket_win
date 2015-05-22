@@ -36,8 +36,8 @@
       = form_for @order, html: { class: 'require-validation payment-form' } do |f|
         .form-row
           .col-xs-12.form-group.required
-            %label.control-label Email for order delivery
-            = text_field_tag :email, @email, placeholder: 'user@example.com', size: 4, class: 'form-control'
+            %label.control-label Email for ticket delivery
+            = email_field_tag :email, @email, placeholder: 'user@example.com', size: 4, class: 'form-control', required: true
         - unless @order.event.free?
           .form-row
             .col-xs-12.form-group.required
