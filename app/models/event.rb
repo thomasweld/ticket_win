@@ -36,6 +36,10 @@ class Event < ActiveRecord::Base
   classy_enum_attr :status, class_name: 'EventStatus', default: 'pending_approval'
   [ :pending_approval?, :live?, :expired? ].each { |status_predicate| delegate status_predicate, to: :status }
 
+  def free?
+    tiers.all? { |tier| tier.price == 0 }
+  end
+
   private
 
   def set_defaults

@@ -90,9 +90,13 @@ runTicketCalcs = ->
     num = parseInt( $(this).val() )
     total.num = total.num + (num || 0)
     total.price = total.price + price*(num || 0)
-  console.log(total)
   footer.find('.preorder-ticket-sum').html(total.num + " tickets @")
   footer.find('.preorder-price-sum').html("$" + total.price + ".00")
+  toggleOrdering( total.num > 0 )
+
+toggleOrdering = (valid_number) ->
+  $('#submit-preorder').attr('disabled', !valid_number)
 
 @disableTicketing = () ->
   $('#ticketing-section').remove()
+

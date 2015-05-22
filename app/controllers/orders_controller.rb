@@ -14,34 +14,18 @@ class OrdersController < ApplicationController
     @line_items = line_items
     @total = ?$ + (@order.total / 100).to_s + '.00'
 
-    gon.push(stripe_pub_key: ENV['STRIPE_PUB_KEY'])
+    gon.push(stripe_pub_key: ENV['STRIPE_PUB_KEY'], free_order: @order.event.free?)
   end
 
   def update
     @order = Order.find(params[:id])
-    charge_hash = {
-      amount: @order.total,
-      source_token: params[:stripe_token],
-      destination_user: @order.event.user
-    }
-    charge = StripeCharge.new(@order, charge_hash).execute!
-    path = nil
-    if charge.is_a? Stripe::CardError
-      flash[:error] = "Your payment was unsuccessful. Please try again."
-      path = :back
-    elsif charge.is_a? Stripe::InvalidRequestError
-      flash[:error] = "This event is temporarily unavailable."
-      Rails.logger.fatal "Stripe::InvalidRequestError for order #{@order.id}"
-      Rails.logger.fatal "Error: #{charge}"
-      path = :back
-    elsif charge[:paid] && charge[:status] == 'succeeded'
+    if @order.event.free?
       @order.tickets.each { |t| t.sell! to: current_user }
       @order.update_attribute(:delivery_email, params[:email])
       OrderMailer.order_confirmation_email(@order).deliver_later
       path = redeem_order_path(@order.redemption_code)
     else
-      flash[:error] = "Something went wrong with your payment. Please try again."
-      path = :back
+      path = handle_payment
     end
     redirect_to path
   end
@@ -96,5 +80,33 @@ class OrdersController < ApplicationController
       }
     end
     items
+  end
+
+  def handle_payment
+    charge_hash = {
+      amount: @order.total,
+      source_token: params[:stripe_token],
+      destination_user: @order.event.user
+    }
+    charge = StripeCharge.new(@order, charge_hash).execute!
+    path = nil
+    if charge.is_a? Stripe::CardError
+      flash[:error] = "Your payment was unsuccessful. Please try again."
+      path = :back
+    elsif charge.is_a? Stripe::InvalidRequestError
+      flash[:error] = "This event is temporarily unavailable."
+      Rails.logger.fatal "Stripe::InvalidRequestError for order #{@order.id}"
+      Rails.logger.fatal "Error: #{charge}"
+      path = :back
+    elsif charge[:paid] && charge[:status] == 'succeeded'
+      @order.tickets.each { |t| t.sell! to: current_user }
+      @order.update_attribute(:delivery_email, params[:email])
+      OrderMailer.order_confirmation_email(@order).deliver_later
+      path = redeem_order_path(@order.redemption_code)
+    else
+      flash[:error] = "Something went wrong with your payment. Please try again."
+      path = :back
+    end
+    path
   end
 end

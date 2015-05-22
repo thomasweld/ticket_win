@@ -1,25 +1,26 @@
 $ ->
   $('form.require-validation').bind 'submit', (e) ->
-    $form = $(e.target).closest('form')
-    inputSelector = [
-      'input[type=email]'
-      'input[type=password]'
-      'input[type=text]'
-      'input[type=file]'
-      'textarea'
-    ].join(', ')
-    $inputs = $form.find('.required').find(inputSelector)
-    $errorMessage = $form.find('div.error')
-    valid = true
-    $errorMessage.addClass 'hide'
-    $('.has-error').removeClass 'has-error'
-    $inputs.each (i, el) ->
-      $input = $(el)
-      if $input.val() == ''
-        $input.parent().addClass 'has-error'
-        $errorMessage.removeClass 'hide'
-        e.preventDefault()
-        # cancel on first error
+    unless gon.freeOrder
+      $form = $(e.target).closest('form')
+      inputSelector = [
+        'input[type=email]'
+        'input[type=password]'
+        'input[type=text]'
+        'input[type=file]'
+        'textarea'
+      ].join(', ')
+      $inputs = $form.find('.required').find(inputSelector)
+      $errorMessage = $form.find('div.error')
+      valid = true
+      $errorMessage.addClass 'hide'
+      $('.has-error').removeClass 'has-error'
+      $inputs.each (i, el) ->
+        $input = $(el)
+        if $input.val() == ''
+          $input.parent().addClass 'has-error'
+          $errorMessage.removeClass 'hide'
+          e.preventDefault()
+          # cancel on first error
 
 $ ->
   $form = $('.payment-form')
@@ -37,12 +38,13 @@ $ ->
       $form.get(0).submit()
 
   $form.on 'submit', (e) ->
-    e.preventDefault()
-    $form.find('.btn').attr('disabled', true)
-    Stripe.setPublishableKey gon.stripePubKey
-    Stripe.createToken {
-      number: $('.card-number').val()
-      cvc: $('.card-cvc').val()
-      exp_month: $('.card-expiry-month').val()
-      exp_year: $('.card-expiry-year').val()
-    }, stripeResponseHandler
+    unless gon.freeOrder
+      e.preventDefault()
+      $form.find('.btn').attr('disabled', true)
+      Stripe.setPublishableKey gon.stripePubKey
+      Stripe.createToken {
+        number: $('.card-number').val()
+        cvc: $('.card-cvc').val()
+        exp_month: $('.card-expiry-month').val()
+        exp_year: $('.card-expiry-year').val()
+      }, stripeResponseHandler

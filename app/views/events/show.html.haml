@@ -26,7 +26,7 @@
           %td.preorder-ticket-sum.text-right
           %td.preorder-price-sum
           %td
-            = f.submit 'Buy Now', data: { disable_with: 'Processing...' }, class: 'btn btn-primary'
+            = f.submit 'Buy Now', data: { disable_with: 'Processing...' }, class: 'btn btn-primary', disabled: true, id: 'submit-preorder'
 %br
 .row
   .col-md-12.text-center
