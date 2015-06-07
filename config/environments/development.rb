@@ -34,10 +34,9 @@ TicketWin::Application.configure do
     port: ENV["SMTP_PORT"].to_i,
     domain: ENV["MAILER_DOMAIN"],
     authentication: "plain",
-    enable_starttls_auto: true,
+    enable_starttls_auto: false,
     user_name: ENV["SMTP_USER"],
-    password: ENV["SMTP_PWD"],
-    ssl: true
+    password: ENV["SMTP_PWD"]
   }
 
   # config/environments/production.rb
