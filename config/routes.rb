@@ -6,6 +6,7 @@ TicketWin::Application.routes.draw do
   get "/terms", to: "pages#terms", as: "terms"
     get "/organizer_terms", to: "pages#organizer_terms", as: "organizer_terms"
   post "/emailconfirmation", to: "pages#email", as: "email_confirmation"
+  get "/checkin", to: "checkins#index", as: "checkin"
 
   devise_for :users
 
@@ -14,7 +15,10 @@ TicketWin::Application.routes.draw do
     resources :users
   end
 
-  resources :events
+  resources :events do
+    resources :tickets
+  end
+  
   resources :orders, except: [:new, :show] do
     member { get 'checkout' }
   end

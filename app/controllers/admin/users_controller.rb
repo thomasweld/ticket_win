@@ -6,7 +6,6 @@ class Admin::UsersController < Admin::BaseController
     :update,
     :destroy
   ]
-
   
   def index
     @users = User.search_and_order(params[:search], params[:page])

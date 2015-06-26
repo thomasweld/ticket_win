@@ -36,6 +36,7 @@ end
 
 gem 'pg'
 gem 'devise', '3.4.1'
+gem 'cancancan', '~> 1.10'
 
 group :production do
   gem 'rails_12factor'
