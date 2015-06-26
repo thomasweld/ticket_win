@@ -47,6 +47,11 @@ class User < ActiveRecord::Base
   has_many :events
   has_many :tickets
 
+    # https://github.com/CanCanCommunity/cancancan/wiki/Role-Based-Authorization
+  def has_role?(role)
+    roles.include?(role)
+  end
+
   def stripe_authorized?
     self.stripe_user_id && self.stripe_authorized_at
   end
@@ -85,4 +90,17 @@ class User < ActiveRecord::Base
   def self.users_count
     where("admin = ? AND locked = ?",false,false).count
   end
+
+    # https://github.com/CanCanCommunity/cancancan/wiki/Role-Based-Authorization
+  def roles=(roles)
+    roles = [*roles].map { |r| r.to_sym }
+    self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
+  end
+
+  def roles
+    ROLES.reject do |r|
+      ((roles_mask.to_i || 0) & 2**ROLES.index(r)).zero?
+    end
+  end
+
 end
