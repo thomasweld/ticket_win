@@ -12,10 +12,6 @@ class EventsController < ApplicationController
     @order = Order.new
   end
 
-  def checkin
-    @event = Event.find(params[:id])
-  end
-
   def new
     @event = Event.new(user: current_user)
     5.times { @event.tiers.build }

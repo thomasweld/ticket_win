@@ -16,9 +16,9 @@ TicketWin::Application.routes.draw do
   end
 
   resources :events do
-    resources :tickets
+    resources :tickets, only: [:index, :update]
   end
-  
+
   resources :orders, except: [:new, :show] do
     member { get 'checkout' }
   end

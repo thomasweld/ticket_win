@@ -12,3 +12,6 @@ end
 
 class TicketStatus::LockedByEventOwner < TicketStatus
 end
+
+class TicketStatus::CheckedIn < TicketStatus
+end
