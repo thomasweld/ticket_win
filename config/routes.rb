@@ -1,9 +1,5 @@
 TicketWin::Application.routes.draw do
 
-  get 'tickets/index'
-
-  get 'tickets/update'
-
   root "pages#home"
   get "inside", to: "pages#inside", as: "inside"
   get "/contact", to: "pages#contact", as: "contact"
@@ -20,9 +16,9 @@ TicketWin::Application.routes.draw do
   end
 
   resources :events do
-    resources :tickets
+    resources :tickets, only: [:index, :update]
   end
-  
+
   resources :orders, except: [:new, :show] do
     member { get 'checkout' }
   end

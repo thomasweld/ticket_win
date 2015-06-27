@@ -25,9 +25,17 @@ class Ticket < ActiveRecord::Base
   validates :tier, presence: true
 
   classy_enum_attr :status, class_name: 'TicketStatus', default: 'unsold'
-  [ :unsold?, :sold?, :locked_for_order?, :locked_by_event_owner? ].each { |status_predicate| delegate status_predicate, to: :status }
+  %i[unsold? sold? locked_for_order? locked_by_event_owner? checked_in?].each do |status_predicate|
+    delegate status_predicate, to: :status
+  end
 
-  [ :price, :level, :name, :description, :event_id ].each { |attr| delegate attr, to: :tier }
+  %i[price level name description event_id].each do |attr|
+    delegate attr, to: :tier
+  end
+
+  def self.manageable
+    where(status: %w[sold checked_in])
+  end
 
   def lock_for_order!
     self.update_attributes(status: 'locked_for_order')
