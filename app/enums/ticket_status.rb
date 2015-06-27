@@ -15,3 +15,4 @@ end
 
 class TicketStatus::CheckedIn < TicketStatus
 end
+

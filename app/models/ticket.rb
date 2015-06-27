@@ -33,6 +33,13 @@ class Ticket < ActiveRecord::Base
     delegate attr, to: :tier
   end
 
+  def self.search(query)
+    where("sku like ?", "%#{query}%")
+    where("delivery_email like ?", "%#{query}%") 
+  end
+
+  delegate :delivery_email, to: :order
+
   def self.manageable
     where(status: %w[sold checked_in])
   end
