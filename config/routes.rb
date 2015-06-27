@@ -1,5 +1,9 @@
 TicketWin::Application.routes.draw do
 
+  get 'tickets/index'
+
+  get 'tickets/update'
+
   root "pages#home"
   get "inside", to: "pages#inside", as: "inside"
   get "/contact", to: "pages#contact", as: "contact"
