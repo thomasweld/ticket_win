@@ -16,12 +16,14 @@
 #  image_file_size    :integer
 #  image_updated_at   :datetime
 #  location           :string
+#  organization_id    :integer
 #
 
 class Event < ActiveRecord::Base
   include ClassyEnum::ActiveRecord
 
   belongs_to :user
+  belongs_to :organization
   has_many :tiers, dependent: :destroy
   has_many :tickets, through: :tiers
   accepts_nested_attributes_for :tiers, reject_if: lambda { |t| t[:name].blank? }

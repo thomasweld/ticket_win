@@ -30,6 +30,9 @@
 #  stripe_pub_key         :string
 #  stripe_secret_key      :string
 #  stripe_authorized_at   :datetime
+#  role                   :string
+#  organization_id        :integer
+#  owner_org_id           :integer
 #
 
 class User < ActiveRecord::Base
@@ -44,12 +47,14 @@ class User < ActiveRecord::Base
 
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
+  belongs_to :organization
   has_many :events
   has_many :tickets
 
-    # https://github.com/CanCanCommunity/cancancan/wiki/Role-Based-Authorization
-  def has_role?(role)
-    roles.include?(role)
+  ROLES = %i[user member owner admin]
+
+  def role?(base_role)
+    ROLES.index(base_role.to_sym) <= ROLES.index(self.role.to_sym)
   end
 
   def stripe_authorized?
@@ -90,17 +95,4 @@ class User < ActiveRecord::Base
   def self.users_count
     where("admin = ? AND locked = ?",false,false).count
   end
-
-    # https://github.com/CanCanCommunity/cancancan/wiki/Role-Based-Authorization
-  def roles=(roles)
-    roles = [*roles].map { |r| r.to_sym }
-    self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
-  end
-
-  def roles
-    ROLES.reject do |r|
-      ((roles_mask.to_i || 0) & 2**ROLES.index(r)).zero?
-    end
-  end
-
 end
