@@ -25,7 +25,8 @@ class Ticket < ActiveRecord::Base
   validates :tier, presence: true
 
   classy_enum_attr :status, class_name: 'TicketStatus', default: 'unsold'
-  %i[unsold? sold? locked_for_order? locked_by_event_owner? checked_in?].each do |status_predicate|
+  %i[unsold? sold? locked_for_order?
+  locked_by_event_owner? checked_in?].each do |status_predicate|
     delegate status_predicate, to: :status
   end
 
@@ -33,9 +34,10 @@ class Ticket < ActiveRecord::Base
     delegate attr, to: :tier
   end
 
-  def self.search(query)
-    where("sku like ?", "%#{query}%")
-    where("delivery_email like ?", "%#{query}%") 
+  def self.search(query, pre_scope=nil)
+    query.gsub!(/ /, '')
+    pre_scope.joins(:order)
+      .where("sku like ? OR orders.delivery_email like ?", "%#{query}%", "%#{query}%")
   end
 
   delegate :delivery_email, to: :order

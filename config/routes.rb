@@ -16,9 +16,7 @@ TicketWin::Application.routes.draw do
   end
 
   resources :events do
-    resources :tickets, only: [:index, :update] do
-      collection { get 'search' }
-    end
+    resources :tickets, only: [:index, :update]
   end
 
   resources :orders, except: [:new, :show] do

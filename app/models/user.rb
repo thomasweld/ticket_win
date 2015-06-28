@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   ROLES = %i[user member owner admin]
 
   def role?(base_role)
-    ROLES.index(base_role.to_sym) <= ROLES.index(role.to_sym)
+    ROLES.index(base_role.to_sym) <= ROLES.index(self.role.to_sym)
   end
 
   def stripe_authorized?

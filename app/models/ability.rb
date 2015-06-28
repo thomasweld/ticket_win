@@ -5,7 +5,7 @@ class Ability
 
   def initialize(user)
     @user = user || User.new
-    alias_action [:read, :update, :search], to: :checkin
+    alias_action [:index, :show, :update, :search], to: :checkin
 
     if user.role? :admin
       admins

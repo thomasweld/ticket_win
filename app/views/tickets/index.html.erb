@@ -2,30 +2,38 @@
 <div class="row">
   <div class="col-md-6">
     <h1>Checkin for <%= @event.title %></h1>
-  </div>
-  <div class="col-md-6">
-    <%= form_tag(search_event_tickets_path, :method => "get", id: "search-form") do %>
-      <%= text_field_tag :search, params[:search], placeholder: "Search Tickets" %>
-      <%= submit_tag "Search", :name => nil %>
-    <% end %>
+    <p>
   </div>
 </div>
+<div class="row text-center">
+    <%= form_tag(event_tickets_path, :method => "get", id: "search-form", class: 'form-inline') do %>
+      <div class="form-group">
+        <%= text_field_tag :search, params[:search], placeholder: @placeholder, class: 'form-control' %>
+        <%= submit_tag "Search", :name => nil, class: 'btn btn-default' %>
+      </div>
+    <% end %>
+</div>
 
-<table class="table table-hover">
+<table class="table table-hover table-striped">
   <thead>
     <tr>
-      <th colspan="3">SKU</th>
-      <th colspan="3">Email</th>
-      <th colspan="3">Tier</th>
+      <th>SKU</th>
+      <th>Email</th>
+      <th>Tier</th>
+      <th>Purchase Date</th>
+      <th>Status</th>
     </tr>
   </thead>
 
   <tbody>
     <% @tickets.each do |ticket| %>
       <tr>
-        <td colspan="3"><%= ticket.sku %></td>
-        <td colspan="3"><%= ticket.delivery_email %></td>
-        <td colspan="3"><%= ticket.name %></td>
+        <td><%= ticket.formatted_sku %></td>
+        <td><%= ticket.delivery_email %></td>
+        <td><%= ticket.name %></td>
+        <td><%= ticket.order.created_at.to_formatted_s(:short) %></td>
+        <td><%= link_to 'Check in', event_ticket_path(id: ticket.id),
+          method: :put, class: 'btn btn-info' %></td>
       </tr>
     <% end %>
   </tbody>

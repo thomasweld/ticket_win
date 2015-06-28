@@ -2,14 +2,12 @@ class TicketsController < ApplicationController
   def index
     @event = Event.find(index_params[:event_id])
     @tickets = @event.tickets.manageable
-    if params[:search]
-      @users = Ticket.search(params[:search]).order("created_at DESC")
-    else
-      @users = Ticket.all.order('created_at DESC')
-    end
-  end
+    @placeholder = "SKU (#{@tickets.first.sku}) or email (test@example.com)"
+    authorize! :checkin, @tickets.first
 
-  def search
+    if params[:search]
+      @tickets = Ticket.search(params[:search], @tickets).order("created_at DESC")
+    end
   end
 
   def update
