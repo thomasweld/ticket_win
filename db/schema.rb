@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150626034808) do
+ActiveRecord::Schema.define(version: 20150628184523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20150626034808) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.string   "location"
+    t.integer  "organization_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -43,6 +44,12 @@ ActiveRecord::Schema.define(version: 20150626034808) do
 
   add_index "orders", ["redemption_code"], name: "index_orders_on_redemption_code", unique: true, using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "tickets", force: :cascade do |t|
     t.string   "sku",        null: false
@@ -98,7 +105,8 @@ ActiveRecord::Schema.define(version: 20150626034808) do
     t.string   "stripe_secret_key"
     t.datetime "stripe_authorized_at"
     t.string   "role"
-    t.integer  "roles_mask"
+    t.integer  "organization_id"
+    t.integer  "owner_org_id"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
