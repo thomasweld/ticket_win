@@ -16,6 +16,7 @@
 #  image_file_size    :integer
 #  image_updated_at   :datetime
 #  location           :string
+#  organization_id    :integer
 #
 
 class Event < ActiveRecord::Base

@@ -30,6 +30,9 @@
 #  stripe_pub_key         :string
 #  stripe_secret_key      :string
 #  stripe_authorized_at   :datetime
+#  role                   :string
+#  organization_id        :integer
+#  owner_org_id           :integer
 #
 
 class User < ActiveRecord::Base
@@ -44,6 +47,7 @@ class User < ActiveRecord::Base
 
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
+  belongs_to :organization
   has_many :events
   has_many :tickets
 
