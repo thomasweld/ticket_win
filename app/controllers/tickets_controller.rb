@@ -8,6 +8,10 @@ class TicketsController < ApplicationController
     if params[:search]
       @tickets = Ticket.search(params[:search], @tickets).order("created_at DESC")
     end
+
+  rescue CanCan::AccessDenied
+    flash[:error] = "You do not have access to manage this event."
+    return redirect_to root_path
   end
 
   def update

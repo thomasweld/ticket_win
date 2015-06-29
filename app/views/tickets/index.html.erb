@@ -32,8 +32,10 @@
         <td><%= ticket.delivery_email %></td>
         <td><%= ticket.name %></td>
         <td><%= ticket.order.created_at.to_formatted_s(:short) %></td>
-        <td><%= link_to 'Check in', event_ticket_path(id: ticket.id),
-          method: :put, class: 'btn btn-info' %></td>
+        <td>
+          <%= link_to 'Check in', event_ticket_path(id: ticket.id),
+            method: :put, remote: true, class: 'btn btn-info' %>
+      </td>
       </tr>
     <% end %>
   </tbody>
