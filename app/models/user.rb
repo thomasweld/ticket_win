@@ -45,13 +45,15 @@ class User < ActiveRecord::Base
 
   paginates_per 100
 
+  after_initialize :set_defaults
+
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
   belongs_to :organization
   has_many :events
   has_many :tickets
 
-  ROLES = %i[user member owner admin]
+  ROLES = %i[guest user member owner admin]
 
   def role?(base_role)
     ROLES.index(base_role.to_sym) <= ROLES.index(self.role.to_sym)
@@ -94,5 +96,9 @@ class User < ActiveRecord::Base
 
   def self.users_count
     where("admin = ? AND locked = ?",false,false).count
+  end
+
+  def set_defaults
+    self.role ||= 'guest'
   end
 end

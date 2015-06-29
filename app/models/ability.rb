@@ -3,8 +3,8 @@ class Ability
 
   attr_reader :user
 
-  def initialize(user)
-    @user = user || User.new
+  def initialize(u)
+    @user = u || User.new
     alias_action [:index, :show, :update, :search], to: :checkin
 
     if user.role? :admin
