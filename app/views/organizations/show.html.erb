@@ -1,0 +1,22 @@
+
+<div class="row text-center">
+  <h1><%= @organization.name %></h1>
+</div>
+
+<!-- 
+@organization.members
+@organization.owner
+@organization.events
+ -->
+
+
+<% @organization.events.each do |event| %>
+  <div class="row text-center">
+    <h4><%= event.title %></h4>
+    <%= image_tag event.image(:thumb), class: "img-responsive img-center" %>
+    <br />
+    <%= link_to 'View', event_path(event), class: "btn btn-primary" %>
+    <%= link_to 'Check in', event_tickets_path(event), class: "btn btn-default" %>
+  </div>
+<% end %>
+
