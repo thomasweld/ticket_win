@@ -1,15 +1,25 @@
 .nav.navbar-nav.navbar-right {
   li {
-  padding-top: 10px;
-  &:last-of-type { padding-top: 2px; }
-}
+    padding-top: 10px;
+    &:last-of-type { padding-top: 2px; }
+  }
   .btn-default {
-  margin-top: 6px;
-  margin-bottom: 6px;
-  color: white;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    color: white;
   }
   .btn-default:hover {
-    background-color: darken(#39D1B4, 5%)
-
+    background-color: darken(#39D1B4, 10%)
+  }
+  .btn-primary {
+    margin-top: -2px;
+    margin-bottom: 6px;
+    margin-right: 14px;
+    color: white;
+  }
+  .btn-primary:hover {
+    background-color: darken(#F43D4D, 10%)
   }
 }
+
+.img-center {margin:0 auto;}
