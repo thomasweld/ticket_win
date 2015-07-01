@@ -32,6 +32,7 @@ class Ability
   def members
     can :checkin, Ticket, tier:
       { event: { organization_id: user.organization.id } }
+    can :read, Organization, id: user.organization.id
   end
 
   def users

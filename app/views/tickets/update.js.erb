@@ -1,0 +1,10 @@
+var ticketId = <%= @ticket.id %>;
+var ticketStatus = '<%= @ticket.status %>';
+var checkedInClass = 'btn-muted';
+var soldClass = 'btn-info';
+
+$('#checkin-btn-'+ticketId).addClass(ticketStatus == 'checked_in' ? checkedInClass : soldClass);
+$('#checkin-btn-'+ticketId).removeClass(ticketStatus == 'checked_in' ? soldClass : checkedInClass);
+$('#checkin-btn-'+ticketId).prop('value', ticketStatus == 'checked_in' ? "Checked in ✓" : "Check in");
+$('#edit_ticket_'+ticketId+' .ticket-status').val(ticketStatus);
+

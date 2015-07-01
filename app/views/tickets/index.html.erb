@@ -31,10 +31,15 @@
         <tr>
           <td><%= ticket.name %></td>
           <td><%= ticket.delivery_email %></td>
-          <td><%= ticket.sku %></td>
+          <td><%= ticket.formatted_sku %></td>
           <td>
-            <%= link_to 'Check in', event_ticket_path(id: ticket.id),
-              method: :put, remote: true, class: 'btn btn-info' %>
+            <%= form_for [@event, ticket], method: :patch, remote: true do |f| %>
+              <%= hidden_field_tag :status, ticket.status, class: 'ticket-status' %>
+              <% submit_text = ticket.status == 'sold' ? 'Check in' : 'Checked in ✓' %>
+              <% submit_class = ticket.status == 'sold' ? 'btn btn-info' : 'btn btn-muted' %>
+              <%= f.submit submit_text, class: submit_class, id: "checkin-btn-#{ticket.id}",
+                style: 'width: 10em; font-size: 0.8em;' %>
+            <% end %>
           </td>
         </tr>
       <% end %>
