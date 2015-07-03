@@ -13,6 +13,7 @@
       %table.table.table-striped#tickets-preorder
         %tbody
           - @tiers.each do |tier|
+            - next unless tier.display?
             = hidden_field_tag 'event_id', @event.id
             %tr
               %td.media
