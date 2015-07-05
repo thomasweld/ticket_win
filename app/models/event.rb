@@ -28,6 +28,8 @@ class Event < ActiveRecord::Base
   has_many :tickets, through: :tiers
   accepts_nested_attributes_for :tiers, reject_if: lambda { |t| t[:name].blank? }
 
+  sanitizes :description
+
   before_create :set_defaults
 
   scope :approved, -> { Event.where(status: 'live') }

@@ -7,38 +7,20 @@ class Ability
     @user = u || User.new
     alias_action [:index, :show, :update, :search], to: :checkin
 
-    if user.role? :admin
-      admins
-    elsif user.role? :owner
-      owners
-    elsif user.role? :member
-      members
-    elsif user.role? :user
-      users
+    can :edit, Event, user_id: user.id
+    can :edit, Tier, tier: { event: { user_id: user.id } }
+
+    case user.role.to_sym
+    when :user    then
+      can :read, Event, status: 'live'
+    when :admin   then
+      can :manage, :all
+    when :owner   then
+    when :member  then
+      can :checkin, Ticket, tier: { event: { organization_id: user.organization.id } }
+      can :read, Organization, id: user.organization.id
     else
-      guests
+
     end
-  end
-
-  private
-
-  def admins
-    can :manage, :all
-  end
-
-  def owners
-  end
-
-  def members
-    can :checkin, Ticket, tier:
-      { event: { organization_id: user.organization.id } }
-    can :read, Organization, id: user.organization.id
-  end
-
-  def users
-    can :read, Event, status: 'live'
-  end
-
-  def guests
   end
 end
