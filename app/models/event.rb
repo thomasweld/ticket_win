@@ -42,6 +42,10 @@ class Event < ActiveRecord::Base
     tiers.all? { |tier| tier.price == 0 }
   end
 
+  def to_param
+    [id, title.parameterize].join(?-)
+  end
+
   private
 
   def set_defaults
