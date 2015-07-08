@@ -21,3 +21,4 @@
 //= require events
 //= require orders
 //= require turbolinks
+//= require tinymce

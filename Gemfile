@@ -24,7 +24,8 @@ gem 'oauth2', '1.0.0'
 gem 'gon', github: 'gazay/gon'
 gem 'stripe', '1.21.0'
 gem 'font-awesome-rails'
-
+gem 'tinymce-rails'
+gem 'sanitize-rails', require: 'sanitize/rails'
 
 group :development, :test do
   gem 'byebug', '3.5.1'
