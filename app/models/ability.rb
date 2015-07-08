@@ -11,12 +11,12 @@ class Ability
     can :edit, Tier, tier: { event: { user_id: user.id } }
 
     case user.role.to_sym
-    when :user    then
+    when :user
       can :read, Event, status: 'live'
-    when :admin   then
+    when :admin
       can :manage, :all
-    when :owner   then
-    when :member  then
+    when :owner
+    when :member
       can :checkin, Ticket, tier: { event: { organization_id: user.organization.id } }
       can :read, Organization, id: user.organization.id
     else
