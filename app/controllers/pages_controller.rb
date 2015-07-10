@@ -14,7 +14,7 @@ class PagesController < ApplicationController
   end
 
   def inside
-    redirect_to home_path
+    redirect_to root_path
   end
 
 
