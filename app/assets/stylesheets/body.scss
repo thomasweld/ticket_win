@@ -36,3 +36,9 @@
 }
 
 .img-center {margin:0 auto;}
+
+@media all and (max-width: 768px) {
+  .logo {
+    display: inline;
+  }
+}
