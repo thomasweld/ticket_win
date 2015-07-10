@@ -1,2 +1,33 @@
-<% title("Home Page") %>
-<h1><i class="fa fa-home"></i> Home Page <small>views/pages/home.html.erb</small></h1>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <h1 class="text-center">Super Easy Events</h1>
+
+    <h2 class="text-center"><%= link_to 'Create a New Event', new_event_path, class: "btn btn-main" %></h2>
+
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-md-4 text-center">
+      <i class="fa fa-money fa-5x"></i>
+      <h3>Minimal Fees</h3>
+      <p>Free events are free. Fees for paid events are only 8%. We cover the transaction cost and your customers never see additional fees tacked on at checkout.</p>
+    </div>
+    <div class="col-md-4 text-center">
+      <i class="fa fa-users fa-5x"></i>
+      <h3>User Friendly</h3>
+      <p>We keep things super clean and simple to use for both event managers and ticket buyers. Nobody likes lengthy forms so we keep it short and to the point.</p>
+    </div>
+   <div class="col-md-4 text-center">
+      <i class="fa fa-mobile fa-5x"></i>
+      <h3>Responsive</h3>
+      <p>Our web application is accessible from any smart phone, computer or tablet and doesn't require you to download any additional applications.</p>
+    </div>
+  </div>
+
+
+</div>

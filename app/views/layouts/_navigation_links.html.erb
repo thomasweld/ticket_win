@@ -1,11 +1,11 @@
 
 <li><%= link_to "Contact", contact_path %></li>
+<li><%= link_to "Events", events_path %></li>
 
 <% if !user_signed_in? %>
   <li><%= link_to "Sign in", new_user_session_path %></li>
   <li><%= link_to "Sign up", new_user_registration_path %></li>
 <% else %>
-  <li><%= link_to "Events", inside_path %></li>
   <li><%= link_to "Edit your account", edit_user_registration_path %></li>
   <% if current_user.admin? %>
     <li><%= link_to "Admin", admin_root_path %></li>

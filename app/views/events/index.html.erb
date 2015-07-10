@@ -1,24 +1,10 @@
 
 <div class="container-fluid">
-
-  <p id="notice"><%= notice %></p>
-
-  <h1>Popular Events</h1>
-
- <div class="row">
-      <% @events.each do |event| %>
-          <div class="col-sm-6 col-md-4"><%= render partial: 'shared/event_card', locals: { event: event } %></div>
-      <% end %>
-</div>
-
-    
-
-    <br />
-
-  <hr>
-  <h3 class='text-center'><%= link_to 'Create your own event', new_event_path %></h2>
-  <p class='text-center'>Create your event with Ticket Win and start selling tickets today!</p>
-  <hr>
-
-
+  <h1>Events</h1>
+  <div class="row">
+    <% @events.each do |event| %>
+      <div class="col-sm-6 col-md-4"><%= render partial: 'shared/event_card', locals: { event: event } %>
+      </div>
+    <% end %>
+  </div>
 </div>

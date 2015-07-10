@@ -22,4 +22,17 @@
   }
 }
 
+.btn-main {
+  font-size: 1em;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  color: #373737;
+  background: transparent;
+  border: 2px solid #373737;
+}
+.btn-main:hover {
+  background-color: darken(#39D1B4, 10%);
+  color: white;
+}
+
 .img-center {margin:0 auto;}

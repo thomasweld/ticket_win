@@ -10,11 +10,11 @@ class PagesController < ApplicationController
   end
 
   def home
-    redirect_to events_path
+    @events = Event.approved
   end
 
   def inside
-    redirect_to events_path
+    redirect_to home_path
   end
 
 
