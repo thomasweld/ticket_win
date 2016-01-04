@@ -23,6 +23,7 @@ TicketWin::Application.routes.draw do
 
   resources :orders, except: [:new, :show] do
     member { get 'checkout' }
+    member { post 'promo' }
   end
   get '/redeem/:redemption_code', to: 'orders#redeem', as: 'redeem_order'
 

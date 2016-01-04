@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
 
   before_action :parse_preorder!, only: :create
+  before_action :safe_referrer, only: :checkout
 
   def create
     @order = Order.create_from_preorder(user: current_user, tickets: requested_tickets)
@@ -12,6 +13,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @email = current_user.try(:email)
     @line_items = line_items
+    @coupon = @order.coupon
     @total = ?$ + (@order.total / 100).to_s + '.00'
 
     gon.push(stripe_pub_key: ENV['STRIPE_PUB_KEY'], free_order: @order.event.free?)
@@ -28,6 +30,29 @@ class OrdersController < ApplicationController
       path = handle_payment
     end
     redirect_to path
+  end
+
+  def promo
+    promo = Coupon.find_by(code: params[:promo_code])
+
+    if promo && !promo.redeemed?
+      order = Order.find(params[:id])
+      order.coupon = promo
+      promo.redeemed_at = Time.zone.now
+
+      if order.save && promo.save
+        flash[:notice] = 'Coupon successfully applied'
+      else
+        flash[:error] = 'There was a problem applying your coupon'
+      end
+
+    elsif promo && promo.redeemed?
+      flash[:error] = 'This coupon has already been redeemed'
+    else
+      flash[:error] = 'Invalid coupon or promo code'
+    end
+
+    redirect_to checkout_order_path
   end
 
   def show
@@ -108,5 +133,11 @@ class OrdersController < ApplicationController
       path = :back
     end
     path
+  end
+
+  def safe_referrer
+    if Rails.env.production? && !(request.referrer =~ /tckwtwn\.com/)
+      redirect_to root_path and return
+    end
   end
 end

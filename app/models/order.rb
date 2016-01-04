@@ -14,6 +14,7 @@
 class Order < ActiveRecord::Base
   belongs_to :user
   has_many :tickets
+  has_one :coupon
 
   after_initialize :provision_redemption_code, unless: :persisted?
 
@@ -27,7 +28,8 @@ class Order < ActiveRecord::Base
   end
 
   def total
-    tickets.map(&:price).reduce(:+)
+    raw = tickets.map(&:price).reduce(:+) - deductions
+    raw > 0 ? raw : 0
   end
 
   def event
@@ -61,5 +63,9 @@ class Order < ActiveRecord::Base
       self.redemption_code = RedemptionCode.new.to_s
       break unless self.class.find_by(redemption_code: self.redemption_code)
     end
+  end
+
+  def deductions
+    coupon ? coupon.amount : 0
   end
 end

@@ -1,11 +1,12 @@
 %h1.text-center Checkout
 
+%p
 .container
   .row
     .col-sm-8
       .panel.panel-default
         .panel-heading
-          %h3.text-center
+          %h3
             %strong Order summary
         .panel-body
           .table-responsive
@@ -24,6 +25,16 @@
                     %td.text-right= li[:quantity]
                     %td.text-right
                       %i= li[:total]
+                - if @coupon
+                  %tr
+                    %td
+                      .small
+                        = @coupon.description.gsub(/\n/, '<br/>').html_safe
+                        .label.label-success REDEEMED
+                    %td.text-right= "-#{number_to_currency(@coupon.amount/100)}"
+                    %td.text-right 1
+                    %td.text-right
+                      %i= "-#{number_to_currency(@coupon.amount/100)}"
                 %tr
                   %td
                   %td
@@ -31,7 +42,18 @@
                     %strong Total
                   %td.text-right
                     %strong= @total
-
+      - unless @coupon
+        .panel.panel-default
+          .panel-heading
+            %h5 Have a coupon or promo code?
+          .panel-body
+            = form_tag controller: 'orders', action: 'promo', method: :post do
+              .form-row.form-inline
+                .col-xs-12.form-group
+                  %label.control-label Promo Code&nbsp;
+                  = text_field_tag :promo_code, '', size: 18, maxlength: 10, placeholder: 'XXXXXXXXXX', style: 'letter-spacing: 5px;', class: 'form-control'
+                  &nbsp;
+                  = submit_tag 'Apply', class: 'btn btn-info'
     .col-md-4
       = form_for @order, html: { class: 'require-validation payment-form' } do |f|
         .form-row
