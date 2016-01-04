@@ -26,6 +26,7 @@ class Event < ActiveRecord::Base
   belongs_to :organization
   has_many :tiers, dependent: :destroy
   has_many :tickets, through: :tiers
+  has_many :coupons
   accepts_nested_attributes_for :tiers, reject_if: lambda { |t| t[:name].blank? }
 
   sanitizes :description
