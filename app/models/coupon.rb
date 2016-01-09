@@ -2,8 +2,8 @@ class Coupon < ActiveRecord::Base
   belongs_to :event
   belongs_to :order
 
-  def self.provision_for_event(event, count:, amount:)
-    raise 'Coupons already provisioned for this event' if event.coupons.any?
+  def self.provision_for_event(event=nil, count:, amount:)
+    raise 'Coupons already provisioned for this event' if event && event.coupons.any?
     provision(event, count, amount)
   end
 
