@@ -27,9 +27,17 @@ class Order < ActiveRecord::Base
     order
   end
 
+  def subtotal
+    tickets.map(&:price).reduce(:+)
+  end
+
   def total
-    raw = tickets.map(&:price).reduce(:+) - deductions
+    raw = subtotal - deductions
     raw > 0 ? raw : 0
+  end
+
+  def free?
+    total <= 0
   end
 
   def event

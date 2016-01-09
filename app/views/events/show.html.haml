@@ -31,9 +31,35 @@
 %br
 .row
   .col-md-12.text-center
+    #talkable-invite-container
+
+-# Begin Talkable integration code
+:javascript
+  var _talkableq = _talkableq || [];
+  _talkableq.push(['init', {
+    site_id: 'ticket-win' // REQUIRED - Talkable Site ID
+  }]);
+
+  var _talkable_affiliate = {
+    affiliate_member: {
+      email: '', // Optional — Advocate email address
+
+    },
+    campaign_template: { name: 'invite' } // Loads Post Purchase campaign with tag "invite"
+  };
+
+  _talkableq.push(['register_affiliate', _talkable_affiliate]); // Pass data to Talkable and show Standalone campaign as a result
+
+<script src="//d2jjzw81hqbuqv.cloudfront.net/integration/talkable-2.0.0.min.js" type="text/javascript"></script>
+-# End Talkable integration code
+
+%br
+.row
+  .col-md-12.text-center
     %p
       = link_to 'Back', events_path
       &nbsp;
       - if user_signed_in?
         - if can? :edit, @event
           = link_to 'Manage this event', edit_event_path(@event), class: "btn btn-info"
+

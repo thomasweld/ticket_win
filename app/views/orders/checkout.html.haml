@@ -9,39 +9,7 @@
           %h3
             %strong Order summary
         .panel-body
-          .table-responsive
-            %table.table.table-condensed
-              %thead
-                %tr
-                  %th Description
-                  %th.text-right Price
-                  %th.text-right Quantity
-                  %th.text-right Total
-              %tbody
-                - @line_items.each do |li|
-                  %tr
-                    %td.small= li[:description].gsub(/\n/,'<br/>').html_safe
-                    %td.text-right= li[:price]
-                    %td.text-right= li[:quantity]
-                    %td.text-right
-                      %i= li[:total]
-                - if @coupon
-                  %tr
-                    %td
-                      .small
-                        = @coupon.description.gsub(/\n/, '<br/>').html_safe
-                        .label.label-success REDEEMED
-                    %td.text-right= "-#{number_to_currency(@coupon.amount/100)}"
-                    %td.text-right 1
-                    %td.text-right
-                      %i= "-#{number_to_currency(@coupon.amount/100)}"
-                %tr
-                  %td
-                  %td
-                  %td.text-right
-                    %strong Total
-                  %td.text-right
-                    %strong= @total
+          = render 'orders/summary'
       - unless @coupon
         .panel.panel-default
           .panel-heading
@@ -60,7 +28,7 @@
           .col-xs-12.form-group.required
             %label.control-label Email for ticket delivery
             = email_field_tag :email, @email, placeholder: 'user@example.com', size: 4, class: 'form-control', required: true
-        - unless @order.event.free?
+        - unless @order.free?
           .form-row
             .col-xs-12.form-group.required
               %label.control-label Name on card
@@ -86,7 +54,7 @@
               %span.amount= @total
         .form-row
           .col-xs-12.form-group
-            - submit_text = @order.event.free? ? "Get tickets" : "Pay »"
+            - submit_text = @order.free? ? "Get tickets" : "Pay »"
             = f.submit submit_text, class: 'form-control btn btn-primary', style: 'margin-top: 10px;'
         .form-row
           .col-xs-12.error.form-group.hide

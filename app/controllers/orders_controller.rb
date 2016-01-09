@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  include ActionView::Helpers::NumberHelper
 
   before_action :parse_preorder!, only: :create
   before_action :safe_referrer, only: :checkout
@@ -14,14 +15,14 @@ class OrdersController < ApplicationController
     @email = current_user.try(:email)
     @line_items = line_items
     @coupon = @order.coupon
-    @total = ?$ + (@order.total / 100).to_s + '.00'
+    @total = total
 
-    gon.push(stripe_pub_key: ENV['STRIPE_PUB_KEY'], free_order: @order.event.free?)
+    gon.push(stripe_pub_key: ENV['STRIPE_PUB_KEY'], free_order: @order.free?)
   end
 
   def update
     @order = Order.find(params[:id])
-    if @order.event.free?
+    if @order.free?
       @order.tickets.each { |t| t.sell! to: current_user }
       @order.update_attribute(:delivery_email, params[:email])
       OrderMailer.order_confirmation_email(@order).deliver_later
@@ -62,6 +63,9 @@ class OrdersController < ApplicationController
 
   def redeem
     @order = Order.find_by(redemption_code: params[:redemption_code])
+    @line_items = line_items
+    @email = @order.delivery_email || current_user.try(:email)
+    @total = total
     @event = @order.event
     @tickets = @order.tickets
   end
@@ -107,6 +111,10 @@ class OrdersController < ApplicationController
     items
   end
 
+  def total
+    number_to_currency(@order.total / 100)
+  end
+
   def handle_payment
     charge_hash = {
       amount: @order.total,
@@ -125,7 +133,11 @@ class OrdersController < ApplicationController
       path = :back
     elsif charge[:paid] && charge[:status] == 'succeeded'
       @order.tickets.each { |t| t.sell! to: current_user }
-      @order.update_attribute(:delivery_email, params[:email])
+      @order.update(
+        delivery_email: params[:email],
+        last4:          charge[:source][:last4],
+        charge_brand:   charge[:source][:brand]
+      )
       OrderMailer.order_confirmation_email(@order).deliver_later
       path = redeem_order_path(@order.redemption_code)
     else
