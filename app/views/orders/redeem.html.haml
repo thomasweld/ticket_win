@@ -1,0 +1,27 @@
+-
+%h1 Your order is complete!
+.row
+  = render 'orders/summary'
+- unless @order.free?
+  .row.text-right
+    %p= "Paid via #{@order.charge_brand} ending in #{@order.last4} on #{@order.updated_at.to_date}"
+
+
+.row
+  - @tickets.each do |ticket|
+    = render partial: 'tickets/ticket', locals: { ticket: ticket, event: @event }
+- if @order.coupon
+  :javascript
+    var _talkableq = _talkableq || [];
+    _talkableq.push(['init', {
+      site_id: 'ticket-win'
+    }]);
+    var _talkable_purchase = {
+      order_number:      "#{@order.id}",
+      email:             "#{@order.delivery_email}",
+      subtotal:          "#{@order.subtotal / 100}",
+      coupon_code:       "#{@order.coupon.code}",
+      campaign_template: { name: 'post-purchase' },
+    };
+    _talkableq.push(['register_purchase', _talkable_purchase]); // Pass data to Talkable and show Post Purchase campaign as a result
+  %script{type: 'text/javascript', src: '//d2jjzw81hqbuqv.cloudfront.net/integration/talkable-2.0.0.min.js'}
