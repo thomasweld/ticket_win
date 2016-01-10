@@ -43,12 +43,14 @@
   var _talkable_affiliate = {
     iframe: {
       width: '100%',
+      height: 600,
       container: 'talkable-invite-container'
     },
     affiliate_member: {
       email: '', // Optional — Advocate email address
     },
-    campaign_template: { name: 'invite' } // Loads Post Purchase campaign with tag "invite"
+    campaign_template: { name: 'invite' },
+    campaign_tags: ['moonshine_2016'] // Loads Post Purchase campaign with tag "invite"
   };
 
   _talkableq.push(['register_affiliate', _talkable_affiliate]); // Pass data to Talkable and show Standalone campaign as a result
