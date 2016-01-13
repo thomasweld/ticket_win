@@ -15,7 +15,7 @@ TicketWin::Application.routes.draw do
     resources :users
   end
 
-  resources :organizations, only: :show
+  resources :organizations, only: [:index, :show]
   resources :events do
     resources :tickets, only: [:index, :update]
   end
