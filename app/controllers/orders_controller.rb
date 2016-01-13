@@ -148,7 +148,7 @@ class OrdersController < ApplicationController
   end
 
   def safe_referrer
-    if Rails.env.production? && !(request.referrer =~ /tcktwn\.com/)
+    if !current_user.try(:admin?) || (Rails.env.production? && !(request.referrer =~ /tcktwn\.com/))
       redirect_to root_path and return
     end
   end
