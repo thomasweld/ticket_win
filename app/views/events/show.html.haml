@@ -33,22 +33,6 @@
   .col-md-10.col-md-offset-1.text-center
     #talkable-moonshine_2016
 
-- if @event.title =~ /Moonshine/
-  -# Begin Talkable integration code
-  :javascript
-    var _talkableq = _talkableq || [];
-    _talkableq.push(['init', {
-      site_id: 'ticket-win' // REQUIRED - Talkable Site ID
-    }]);
-
-    var _talkable_affiliate = {
-      campaign_template: { name: 'moonshine_2016' }
-    };
-
-    _talkableq.push(['register_affiliate', _talkable_affiliate]); // Pass data to Talkable and show Standalone campaign as a result
-
-  <script src="//d2jjzw81hqbuqv.cloudfront.net/integration/talkable-2.0.1.min.js" type="text/javascript"></script>
-  -# End Talkable integration code
 
 %br
 .row
