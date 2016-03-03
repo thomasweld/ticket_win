@@ -2,15 +2,14 @@ class PagesController < ApplicationController
   before_action :authenticate_user!, only: [:inside]
 
   def terms
-
   end
 
   def organizer_terms
-    
   end
 
   def home
     @events = Event.approved
+    @featured_event = Event.find_by(id: 20)
   end
 
   def inside
