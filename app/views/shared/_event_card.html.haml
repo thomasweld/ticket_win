@@ -3,7 +3,8 @@
     .feature-image{ style: "background-image: url(#{event.image.url}); background-position: 0 0;" }
     .feature-copy
       %h3= event.title.upcase
-      %p{ style: "padding-bottom: 4px;" }= raw event.description.truncate(160)
+      %p= raw event.description.truncate(160)
+      %br &nbsp;
     .action-bar
       .date
         %span
