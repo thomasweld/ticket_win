@@ -1,0 +1,9 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <% @events.each do |event| %>
+      <div class="col-sm-6 col-md-4"><%= render partial: 'shared/event_card', locals: { event: event } %>
+      </div>
+    <% end %>
+  </div>
+</div>

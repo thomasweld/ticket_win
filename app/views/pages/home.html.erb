@@ -3,16 +3,16 @@
 
   <div class="row">
 
-    <h1 class="text-center">Super Easy Events</h1>
     <div class="row center">
-      <div class="col-md-4"></div>
-      <div class="col-md-4 text-center">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 text-center">
         <% if @featured_event %>
           <%= link_to(image_tag(@featured_event.image.url(:medium), class: 'img-responsive'), event_path(@featured_event)) %>
         <% end %>
       </div>
-      <div class="col-md-4"></div>
+      <div class="col-md-2"></div>
     </div>
+    <h1 class="text-center">Super Easy Events</h1>
 
     <h2 class="text-center"><%= link_to 'Create a New Event', new_event_path, class: "btn btn-main" %></h2>
 
@@ -37,6 +37,10 @@
       <p>Our web application is accessible from any smart phone, computer or tablet and doesn't require you to download any additional applications.</p>
     </div>
   </div>
+
+  <hr />
+
+  <%= render 'events/index' %>
 
 
 </div>
