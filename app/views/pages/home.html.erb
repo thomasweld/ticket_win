@@ -7,7 +7,7 @@
       <div class="col-md-2"></div>
       <div class="col-md-8 text-center">
         <% if @featured_event %>
-          <%= link_to(image_tag(@featured_event.image.url(:medium), class: 'img-responsive'), event_path(@featured_event)) %>
+          <%= link_to(image_tag(@featured_event.image.url(:medium), class: 'img-responsive', style: "margin: auto;"), event_path(@featured_event)) %>
         <% end %>
       </div>
       <div class="col-md-2"></div>
