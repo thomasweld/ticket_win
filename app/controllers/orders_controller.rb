@@ -64,6 +64,7 @@ class OrdersController < ApplicationController
   def redeem
     @order = Order.find_by(redemption_code: params[:redemption_code])
     @line_items = line_items
+    @coupon = @order.coupon
     @email = @order.delivery_email || current_user.try(:email)
     @total = total
     @event = @order.event
