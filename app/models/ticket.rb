@@ -37,7 +37,7 @@ class Ticket < ActiveRecord::Base
   def self.search(query, pre_scope=nil)
     sku = query.gsub(/ /, '').upcase.strip
     email = query.downcase.strip
-    last4 = query.to_i rescue nil
+    last4 = query
 
     pre_scope.joins(:order)
       .where("sku like ? OR orders.delivery_email like ? OR orders.last4 like ?", "%#{sku}%", "%#{email}%", "%#{last4}%")
