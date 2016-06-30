@@ -37,12 +37,13 @@ class Ticket < ActiveRecord::Base
   def self.search(query, pre_scope=nil)
     sku = query.gsub(/ /, '').upcase.strip
     email = query.downcase.strip
+    last4 = query.to_i rescue nil
 
     pre_scope.joins(:order)
-      .where("sku like ? OR orders.delivery_email like ? OR orders.last4 like ? OR orders.charge_brand like ?", "%#{sku}%", "%#{email}%", "%#{order.try(:last4)}%", "%#{order.try(:charge_brand).try(:upcase)}%")
+      .where("sku like ? OR orders.delivery_email like ? OR orders.last4 like ?", "%#{sku}%", "%#{email}%", "%#{last4}%")
   end
 
-  delegate :delivery_email, to: :order
+  delegate :delivery_email, :last4, to: :order, allow_nil: true
 
   def self.manageable
     where(status: %w[sold checked_in])

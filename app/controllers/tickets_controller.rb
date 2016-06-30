@@ -3,7 +3,7 @@ class TicketsController < ApplicationController
     @event = Event.find(index_params[:event_id])
     @tickets = @event.tickets.manageable
     authorize! :checkin, @tickets.first
-    @placeholder = "SKU (#{@tickets.first.sku}), email (test@example.com), or payment method (Visa, 1234)"
+    @placeholder = "SKU (#{@tickets.first.sku}), email (test@example.com), or last 4 of credit card (5678)"
 
     if params[:search]
       @tickets = Ticket.search(params[:search], @tickets).order("created_at DESC")

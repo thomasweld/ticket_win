@@ -34,8 +34,8 @@
           <td><%= ticket.delivery_email %></td>
           <td><%= ticket.formatted_sku %></td>
           <td>
-            <% if ticket.order.charge_brand.present? %>
-              <%= ticket.order.charge_brand %> (**** **** **** <%= ticket.order.last4 %>)
+            <% if ticket.charge_brand.present? %>
+              <%= ticket.charge_brand %> (**** **** **** <%= ticket.last4 %>)
             <% end %>
           </td>
           <td>
