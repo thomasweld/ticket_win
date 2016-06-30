@@ -22,6 +22,7 @@
         <th>Tier</th>
         <th>Email</th>
         <th>SKU</th>
+        <th>Payment</th>
         <th>Status</th>
       </tr>
     </thead>
@@ -32,6 +33,11 @@
           <td><%= ticket.name %></td>
           <td><%= ticket.delivery_email %></td>
           <td><%= ticket.formatted_sku %></td>
+          <td>
+            <% if ticket.order.charge_brand.present? %>
+              <%= ticket.order.charge_brand %> (**** **** **** <%= ticket.order.last4 %>)
+            <% end %>
+          </td>
           <td>
             <%= form_for [@event, ticket], method: :patch, remote: true do |f| %>
               <%= hidden_field_tag :status, ticket.status, class: 'ticket-status' %>
