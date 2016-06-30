@@ -39,7 +39,7 @@ class Ticket < ActiveRecord::Base
     email = query.downcase.strip
 
     pre_scope.joins(:order)
-      .where("sku like ? OR orders.delivery_email like ?", "%#{sku}%", "%#{email}%")
+      .where("sku like ? OR orders.delivery_email like ? OR orders.last4 like ? OR orders.charge_brand like ?", "%#{sku}%", "%#{email}%", "%#{order.try(:last4)}%", "%#{order.try(:charge_brand).try(:upcase)}%")
   end
 
   delegate :delivery_email, to: :order
