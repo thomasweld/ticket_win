@@ -43,7 +43,7 @@ class Ticket < ActiveRecord::Base
       .where("sku like ? OR orders.delivery_email like ? OR orders.last4 like ?", "%#{sku}%", "%#{email}%", "%#{last4}%")
   end
 
-  delegate :delivery_email, :last4, to: :order, allow_nil: true
+  delegate :delivery_email, :last4, :charge_brand, to: :order, allow_nil: true
 
   def self.manageable
     where(status: %w[sold checked_in])
