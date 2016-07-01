@@ -15,7 +15,7 @@
     <%= image_tag event.image(:thumb), class: "img-responsive img-center" %>
     <br />
     <%= link_to 'View', event_path(event), class: "btn btn-primary" %>
-    <%= link_to 'Check in', event_tickets_path(event), class: "btn btn-default" %>
+    <%= link_to 'Check in', event_tickets_path(event), class: "btn btn-default loading", data: { 'loading-text' => 'Loading...' } %>
     <% if current_user.organization && can?(:read, current_user.organization) %>
       <%= link_to 'Dashboard', event_path(event), class: "btn btn-primary" %>
     <% end %>
