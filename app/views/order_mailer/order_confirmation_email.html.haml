@@ -8,14 +8,14 @@
     %h2= @order.event.location
 
     %p
-      Hello #{@order.delivery_email}, thanks for using tcktwn. Please print or take a screenshot of these tickets to present at the door. Digital copies should work at the gate but we recommend having a back up in case of technical or connectivity issues. If you've purchased tickets for friends or family please provide them with the 7 digit SKU code in large black type from their ticket.
+      Hello #{@order.delivery_email}, thanks for using tcktwn. Please print or take a screenshot of these tickets to present at the door. Digital copies should work at the gate but we recommend having a back up in case of technical or connectivity issues. If you've purchased tickets for friends or family please provide them with the 7 or 8 digit SKU code in large black type from their ticket, or the redemption link below.
     %p
       Contact us at support@tcktwn.com if you have any questions.
     %p
       You have
       = @order.tickets.count
       ticket(s) awaiting redemption.
-      
+
     %p= "#{root_url}redeem/#{@order.redemption_code}"
 
     %p
