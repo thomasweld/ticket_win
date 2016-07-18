@@ -9,7 +9,7 @@ class PagesController < ApplicationController
 
   def home
     @events = Event.approved
-    @featured_event = Event.find_by(id: 20)
+    @featured_event = Event.find_by(id: 25)
   end
 
   def inside
